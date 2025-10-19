@@ -13,9 +13,9 @@ RSA
 ---
 
 ## Table of Contents
-⦁	[Overview](#overview)
-⦁	[Key Features](#key-features)
-⦁	[System Requirements](#system-requirements)
+⦁	[Overview](#overview) --- 
+⦁	[Key Features](#key-features) ---
+⦁	[System Requirements](#system-requirements) ---
 ⦁	[Installation](#installation)
 ⦁	[Quick Start](#quick-start)
 ⦁	[Dataset Preparation](#dataset-preparation)
