@@ -8,21 +8,20 @@
 ---
 
 ## Table of Contents
--[Overview](#overview)
--[Key Features](#key-features)
--[System Requirements](#system-requirements)
--[Installation](#installation)
--[Quick Start](#quick-start)
--[Dataset Preparation](#dataset-preparation)
--[Configuration](#configuration)
--[Usage Guide](#usage-guide)
--[Output Files](#output-files)
--[Performance Benchmarks](#performance-benchmarks)
--[Troubleshooting](#troubleshooting)
--[Project Structure](#project-structure)
--[Citation](#citation)
--[License](#license)
--[Acknowledgments](#acknowledgments)
+⦁	[Overview](#overview)
+⦁	[Key Features](#key-features)
+⦁	[System Requirements](#system-requirements)
+⦁	[Installation](#installation)
+⦁	[Quick Start](#quick-start)
+⦁	[Dataset Preparation](#dataset-preparation)
+⦁	[Configuration](#configuration)
+⦁	[Usage Guide](#usage-guide)
+⦁	[Output Files](#output-files)
+⦁	[Performance Benchmarks](#performance-benchmarks)
+⦁	[Troubleshooting](#troubleshooting)
+⦁	[Project Structure](#project-structure)
+⦁	[Citation](#citation)
+⦁	[License](#license)
 
 ---
 
@@ -33,54 +32,54 @@ This system implements a **supervised machine learning pipeline** for classifyin
 ### Key Capabilities
 
 **Privacy-Preserving Classification**
--No packet payload inspection required
--Works with encrypted traffic (HTTPS, VPN, TLS)
--Compliant with data protection regulations (GDPR)
+⦁	No packet payload inspection required
+⦁	Works with encrypted traffic (HTTPS, VPN, TLS)
+⦁	Compliant with data protection regulations (GDPR)
 
  **High Accuracy Performance**
-- **89.76% overall classification accuracy**
-- Consistent performance across all QoS priority levels
-- Robust handling of class imbalance
+⦁	**89.76% overall classification accuracy**
+⦁	Consistent performance across all QoS priority levels
+⦁	Robust handling of class imbalance
 
  **Intelligent QoS Policy Generation**
-- Automatic mapping from applications to QoS requirements
-- Priority-based resource allocation recommendations
-- Bandwidth, latency, and jitter tolerance specifications
+⦁	Automatic mapping from applications to QoS requirements
+⦁	Priority-based resource allocation recommendations
+⦁	Bandwidth, latency, and jitter tolerance specifications
 
  **Comprehensive Evaluation**
-- Detailed performance metrics (Accuracy, F1-Score, Precision, Recall)
-- Visual analytics (Confusion Matrix, Distribution Charts)
-- Per-application and per-priority-level analysis
+⦁	Detailed performance metrics (Accuracy, F1-Score, Precision, Recall)
+⦁	Visual analytics (Confusion Matrix, Distribution Charts)
+⦁	Per-application and per-priority-level analysis
 
  **Flexible & Configurable**
-- Toggle between SMOTE and Random Oversampling
-- Optional Linear Discriminant Analysis (LDA)
-- Adjustable Random Forest hyperparameters
+⦁	Toggle between SMOTE and Random Oversampling
+⦁	Optional Linear Discriminant Analysis (LDA)
+⦁	Adjustable Random Forest hyperparameters
 
 ### Research Context
 
-This implementation is part of research on **"Network Traffic Classification for Quality of Service Improvement in Mobile Networks Using Machine Learning"**. The system addresses the challenge of identifying application types in modern encrypted networks to enable intelligent QoS policies.
+This implementation is part of research on **"Network Traffic Classification of 5G networks for Improvement of QoS"**. The system addresses the challenge of identifying application types in modern encrypted networks to enable intelligent QoS policies.
 
 **Problem Addressed:**
-- Traditional port-based classification: 30-70% accuracy (obsolete)
-- Deep Packet Inspection (DPI): Ineffective with encryption, privacy concerns
-- **Our Solution:** Flow-level statistical features + Random Forest = 91% accuracy
+⦁	Traditional port-based classification: 30-70% accuracy (obsolete)
+⦁	Deep Packet Inspection (DPI): Ineffective with encryption, privacy concerns
+⦁	**Our Solution:** Flow-level statistical features + Random Forest = 89% accuracy
 
 ---
 
 ## Key Features
 
 ### 1. **Traffic Classification**
-- Classifies 20 mobile application types from MIRAGE-2019 dataset
-- Uses flow-level statistical features (packet size, inter-arrival time, flow duration)
-- Random Forest ensemble classifier with 300 trees
+⦁	Classifies 20 mobile application types from MIRAGE-2019 dataset
+⦁	Uses flow-level statistical features (packet size, inter-arrival time, flow duration)
+⦁	Random Forest ensemble classifier with 300 trees
 
 ### 2. **QoS Policy Framework**
 Each classified application receives detailed QoS recommendations:
-- **Priority Level:** High, Medium, Low
-- **Bandwidth Requirements:** Low, Medium, High, Variable
-- **Latency Sensitivity:** Low, Medium, High, Very High
-- **Jitter Tolerance:** Very Low, Low, Medium, High
+⦁	**Priority Level:** High, Medium, Low
+⦁	**Bandwidth Requirements:** Low, Medium, High, Variable
+⦁	**Latency Sensitivity:** Low, Medium, High, Very High
+⦁	**Jitter Tolerance:** Very Low, Low, Medium, High
 
 ### 3. **Supported Applications**
 | Category | Applications | QoS Priority |
@@ -100,35 +99,35 @@ Each classified application receives detailed QoS recommendations:
 | **Entertainment** | Comics Reader | Low |
 
 ### 4. **Advanced ML Techniques**
-- **Class Imbalance Handling:** Random Oversampling (preferred) or SMOTE
-- **Feature Scaling:** StandardScaler normalization
-- **Dimensionality Reduction:** Optional LDA
-- **Model Persistence:** Save/load trained models for reuse
+⦁	**Class Imbalance Handling:** Random Oversampling (preferred) or SMOTE
+⦁	**Feature Scaling:** StandardScaler normalization
+⦁	**Dimensionality Reduction:** Optional LDA
+⦁	**Model Persistence:** Save/load trained models for reuse
 
 ### 5. **Visualization Suite**
-- Application traffic distribution bar chart (color-coded by priority)
-- QoS priority distribution pie chart
-- Latency sensitivity distribution pie chart
-- Bandwidth requirements distribution pie chart
-- Confusion matrix heatmap
-- Feature importance analysis
+⦁	Application traffic distribution bar chart (color-coded by priority)
+⦁	QoS priority distribution pie chart
+⦁	Latency sensitivity distribution pie chart
+⦁	Bandwidth requirements distribution pie chart
+⦁	Confusion matrix heatmap
+⦁	Feature importance analysis
 
 ---
 
 ## System Requirements
 
 ### Minimum Requirements
-- **Operating System:** Windows 10/11, macOS 10.14+, or Linux (Ubuntu 18.04+)
-- **Python:** 3.8 or higher
-- **RAM:** 8GB (16GB recommended for full dataset)
-- **Storage:** 5GB free space
-- **CPU:** Multi-core processor (4+ cores recommended)
+⦁	**Operating System:** Windows 10/11, macOS 10.14+, or Linux (Ubuntu 18.04+)
+⦁	**Python:** 3.8 or higher
+⦁	**RAM:** 8GB (16GB recommended for full dataset)
+⦁	**Storage:** 5GB free space
+⦁	**CPU:** Multi-core processor (4+ cores recommended)
 
 ### Recommended Configuration
-- **RAM:** 16GB or higher
-- **CPU:** Intel i5/i7 or AMD Ryzen 5/7 (8+ cores)
-- **Storage:** SSD for faster data processing
-- **GPU:** Not required (CPU-only implementation)
+⦁	**RAM:** 16GB or higher
+⦁	**CPU:** Intel i5/i7 or AMD Ryzen 5/7 (8+ cores)
+⦁	**Storage:** SSD for faster data processing
+⦁	**GPU:** Not required (CPU-only implementation)
 
 ### Python Dependencies
 
@@ -151,7 +150,7 @@ Each classified application receives detailed QoS recommendations:
 
 #### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/yourusername/network_traffic_classification.git
+git clone https://github.com/tomRiddle-the1st/network_traffic_classification.git
 cd network-traffic-qos-classifier
 ```
 
@@ -321,11 +320,11 @@ Total execution time: 5 minutes and 32.18 seconds
 ### MIRAGE-2019 Dataset
 
 **Dataset Information:**
-- **Name:** MIRAGE-2019
-- **Source:** University of Naples Federico II
-- **Applications:** 20 popular Android apps
-- **Format:** JSON files with flow-level features
-- **Size:** Variable (typically 100MB - 5GB depending on apps selected)
+⦁	**Name:** MIRAGE-2019
+⦁	**Source:** University of Naples Federico II
+⦁	**Applications:** 20 popular Android apps
+⦁	**Format:** JSON files with flow-level features
+⦁	**Size:** Variable (typically 100MB - 5GB depending on apps selected)
 
 **Download Instructions:**
 1. Visit: https://traffic.comics.unina.it/mirage/
@@ -335,13 +334,13 @@ Total execution time: 5 minutes and 32.18 seconds
 ### Supported Application Filenames
 
 The system automatically extracts labels from filenames. Supported patterns:
-- `com.waze_*.json` → waze
-- `com.google.android.youtube_*.json` → youtube
-- `com.spotify.music_*.json` → spotify
-- `com.facebook.katana_*.json` → facebook
-- `com.facebook.orca_*.json` → messenger
-- `air.com.hypah.io.slither_*.json` → slither
-- And more...
+⦁	`com.waze_*.json` → waze
+⦁	`com.google.android.youtube_*.json` → youtube
+⦁	`com.spotify.music_*.json` → spotify
+⦁	`com.facebook.katana_*.json` → facebook
+⦁	`com.facebook.orca_*.json` → messenger
+⦁	`air.com.hypah.io.slither_*.json` → slither
+⦁	And more...
 
 ### Using Custom Datasets
 
@@ -654,24 +653,24 @@ Step 5: QoS analysis...
 The system generates several plots:
 
 1. **Application Traffic Distribution** (Bar Chart)
-   - Shows number of flows per application
-   - Color-coded by QoS priority level
+⦁	   Shows number of flows per application
+⦁	   Color-coded by QoS priority level
    
 2. **QoS Priority Distribution** (Pie Chart)
-   - High, medium, low priority breakdown
-   - Percentage and flow count annotations
+⦁	   High, medium, low priority breakdown
+⦁	   Percentage and flow count annotations
 
 3. **Latency Sensitivity Distribution** (Pie Chart)
-   - Very high, high, medium, low sensitivity
-   - Flow count for each category
+⦁	   Very high, high, medium, low sensitivity
+⦁	   Flow count for each category
 
 4. **Bandwidth Requirements** (Pie Chart)
-   - Low, medium, high, variable bandwidth needs
-   - Proportional representation
+⦁	   Low, medium, high, variable bandwidth needs
+⦁	   Proportional representation
 
 5. **Confusion Matrix** (Heatmap)
-   - Per-application classification accuracy
-   - Identifies misclassification patterns
+⦁	   Per-application classification accuracy
+⦁	   Identifies misclassification patterns
 
 ---
 
@@ -708,17 +707,17 @@ The system generates several plots:
 ### Hardware Performance
 
 **Test System Specifications:**
-- **CPU:** Intel Core i7-10700K (8 cores, 16 threads)
-- **RAM:** 16 GB DDR4
-- **Storage:** NVMe SSD
-- **OS:** Windows 10 / Ubuntu 20.04
+⦁	 **CPU:** Intel Core i7-10700K (8 cores, 16 threads)
+⦁	 **RAM:** 16 GB DDR4
+⦁	 **Storage:** NVMe SSD
+⦁	 **OS:** Windows 10 / Ubuntu 20.04
 
 **Training Performance:**
-- Dataset Size: 200,000 flows (after oversampling)
-- Features: 89 flow-level statistics
-- Training Time: 2 minutes 15 seconds
-- Prediction Time: <1ms per flow
-- Model Size: 180 MB
+⦁	Dataset Size: 237300 flows (after oversampling)
+⦁	Features: 102 flow-level statistics
+⦁	Training Time: 2 minutes 15 seconds
+⦁	Prediction Time: <1ms per flow
+⦁	Model Size: 180 MB
 
 ---
 
@@ -885,9 +884,9 @@ If you encounter issues not covered here:
 5. **Check System Resources:** Monitor RAM and CPU usage
 
 **Support Channels:**
-- GitHub Issues: https://github.com/yourusername/repo/issues
-- Email: aqeelismail06@gmail.com
-- Documentation: See USER_MANUAL.md for detailed guides
+⦁	GitHub Issues: https://github.com/tomRiddle-the1st/repo/issues
+⦁	Email: aqeelismail06@gmail.com
+⦁	Documentation: See USER_MANUAL.md for detailed guides
 
 ---
 
@@ -931,12 +930,12 @@ If you use this software in your research, please cite:
 @title={Network Traffic Classification of 5G networks for Improvement of QoS},
   author={Ismail, Mohammed Aqeel},
   year={2025},
-  note={Software available at: https://github.com/yourusername/network_traffic_classification}
+  note={Software available at: https://github.com/tomRiddle-the1st/network_traffic_classification}
 }
 ```
 
 **Related Publications:**
-- MIRAGE-2019 Dataset: Aceto et al., "MIRAGE: Mobile-app Traffic Capture and Ground-truth Creation", IEEE ICCCS 2019
+⦁	MIRAGE-2019 Dataset: Aceto et al., "MIRAGE: Mobile-app Traffic Capture and Ground-truth Creation", IEEE ICCCS 2019
 
 ---
 
@@ -946,9 +945,9 @@ This project is developed for educational purposes as part of COMP700 coursework
 
 Usage Terms:
 
--Free for educational and personal use
--Modifications and improvements encouraged
--Attribution appreciated
+⦁	Free for educational and personal use
+⦁	Modifications and improvements encouraged
+⦁	Attribution appreciated
 
 ```
 Copyright (c) 2025 Mohammed Aqeel Ismail
