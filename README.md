@@ -2,31 +2,31 @@
 
 
 **Author:** Mohammed Aqeel Ismail  
-**Institution:** School of Mathematics, 
-Statistics and Computer Science, 
-College of Agriculture, Engineering and Science, 
-University of KwaZulu-Natal, Pietermaritzburg Campus, 
-Pietermaritzburg 3201, 
-RSA 
-**Year:** 2025
+**Institution:** School of Mathematics,   
+Statistics and Computer Science,  
+College of Agriculture, Engineering and Science,   
+University of KwaZulu-Natal, Pietermaritzburg Campus,   
+Pietermaritzburg 3201,  
+RSA  
+**Year:** 2025  
 
 ---
 
-## Table of Contents
-⦁	[Overview](#overview) --- 
-⦁	[Key Features](#key-features) ---
-⦁	[System Requirements](#system-requirements) ---
-⦁	[Installation](#installation)
-⦁	[Quick Start](#quick-start)
-⦁	[Dataset Preparation](#dataset-preparation)
-⦁	[Configuration](#configuration)
-⦁	[Usage Guide](#usage-guide)
-⦁	[Output Files](#output-files)
-⦁	[Performance Benchmarks](#performance-benchmarks)
-⦁	[Troubleshooting](#troubleshooting)
-⦁	[Project Structure](#project-structure)
-⦁	[Citation](#citation)
-⦁	[License](#license)
+## Table of Contents  
+⦁	[Overview](#overview)   
+⦁	[Key Features](#key-features)   
+⦁	[System Requirements](#system-requirements)  
+⦁	[Installation](#installation)  
+⦁	[Quick Start](#quick-start)  
+⦁	[Dataset Preparation](#dataset-preparation)  
+⦁	[Configuration](#configuration)  
+⦁	[Usage Guide](#usage-guide)  
+⦁	[Output Files](#output-files)  
+⦁	[Performance Benchmarks](#performance-benchmarks)  
+⦁	[Troubleshooting](#troubleshooting)  
+⦁	[Project Structure](#project-structure)  
+⦁	[Citation](#citation)  
+⦁	[License](#license)  
 
 ---
 
