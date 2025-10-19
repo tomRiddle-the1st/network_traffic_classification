@@ -300,9 +300,9 @@ Model training completed!
 Total training time: 2.00 minutes and 15.43 seconds
 
 Step 4: Evaluating model performance...
-Accuracy: 0.9100
-Macro F1-Score: 0.9105
-Weighted F1-Score: 0.9108
+Accuracy: 0.8976
+Macro F1-Score: 0.8971
+Weighted F1-Score: 0.8971
 [Confusion matrix displayed]
 [Top features listed]
 [QoS recommendations printed]
@@ -643,9 +643,9 @@ Step 3: Train model...
 └─ Training time: 2.15 minutes
 
 Step 4: Evaluating model...
-├─ Accuracy: 0.
-├─ Macro F1: 0.9105
-├─ Weighted F1: 0.9108
+├─ Accuracy: 0.8976
+├─ Macro F1: 0.8971
+├─ Weighted F1: 0.8971
 ├─ [Confusion matrix displayed]
 └─ [QoS recommendations printed]
 
