@@ -12,7 +12,8 @@ RSA
 
 ### 1.1 What is This System?
 
-This Network Traffic Classification System is a machine learning-based tool that automatically identifies mobile applications from their network traffic patterns and recommends Quality of Service (QoS) policies for optimal network performance.
+This Network Traffic Classification System is a machine learning-based tool that automatically identifies mobile applications from their 
+network traffic patterns and recommends Quality of Service (QoS) policies for optimal network performance.
 
 **Key Benefits:**
 - **Privacy-Preserving:** Works without inspecting packet content  
@@ -117,7 +118,7 @@ After running the system, you will have:
 1. **Trained Model** (`model.pkl`) - Ready for deployment  
 2. **Performance Metrics** - Accuracy, F1-scores, confusion matrix  
 3. **QoS Recommendations** - Priority levels for each application  
-4. **Visualizations** - Charts showing traffic distribution and performance  
+4. **Visualizations** - bar charts and pie chart showing traffic distribution and performance  
 5. **Processed Dataset** (`Mirage_flows.csv`) - For future analysis  
 
 ---
@@ -447,16 +448,16 @@ Duplicates minority class samples to balance dataset.
 
 **Before Oversampling:**
 ```
-waze:      1,234 flows
-youtube:  15,678 flows  ← Majority class
-spotify:   3,456 flows
+waze:      11865 flows  <-- Majority class
+youtube:    6493 flows   
+spotify:    6615 flows
 ```
 
 **After Oversampling:**
 ```
-waze:     15,678 flows  ← Balanced
-youtube:  15,678 flows
-spotify:  15,678 flows
+waze:     11855 flows  <--  Balanced
+youtube:  11855 flows
+spotify:  11855 flows
 ```
 
 #### Linear Discriminant Analysis (Optional)
@@ -738,7 +739,7 @@ for file in os.listdir(data_folder):
         try:
             with open(os.path.join(data_folder, file)) as f:
                 json.load(f)
-            print(f"✓ {file}")
+            print(f" {file}")
         except json.JSONDecodeError:
             print(f"✗ {file} - INVALID JSON")
 ```
@@ -893,7 +894,7 @@ Number of apps: 20
 A bar chart will appear showing:  
 - X-axis: Applications  
 - Y-axis: Number of flows  
-- Colors: QoS priority (blue=high, orange=medium, beige=low)  
+- Colors: QoS priority (blue=high, orange=medium, peach=low)  
 
 #### Step 3 Output  
 ```
