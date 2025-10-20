@@ -19,12 +19,13 @@ from sklearn.preprocessing import StandardScaler
 
 data_folder = "data" #dataset 
 
-output_folder = "output"
+output_folder = "output" #folder to saved model, scaler, lda and Mirage
 os.makedirs(output_folder, exist_ok=True)
 
-charts_folder = "charts"
+charts_folder = "charts" #folder to save charts
 os.makedirs(charts_folder, exist_ok=True) 
 
+#gets saved to output folder
 processed_data = os.path.join(output_folder, "Mirage_flows.csv")  
 Model = os.path.join(output_folder, "model.pkl")                 
 scaler_file = os.path.join(output_folder, "feature_scaler.pkl")   
@@ -226,7 +227,7 @@ def preprocess(data):
 
     print(f"\nDataset shape: {X.shape}")
     print(f"Number of apps: {y.nunique()}")
-    print(f"App with number of flows:")
+    print(f"Apps with number of flows:")
     print(y.value_counts())
 
     #bar chart
@@ -288,7 +289,7 @@ def train_model(X, y):
     if oversampling_method == "SMOTE":
         smote = SMOTE(random_state=42)
         X_resampled, y_resampled = smote.fit_resample(X_scaled, y)
-        print(f"Applied SMOTE: {X_scaled.shape} ... {X_resampled.shape}")
+        print(f"Applied SMOTE: {X_scaled.shape} ... flows sample to {X_resampled.shape}")
     elif oversampling_method == "Random Oversampling":
         ros = RandomOverSampler(random_state=42)
         X_resampled, y_resampled = ros.fit_resample(X_scaled, y)
@@ -314,7 +315,7 @@ def train_model(X, y):
         #save LDA transformer
         joblib.dump(lda, lda_file)
 
-    else
+    else:
         X_final = X_resampled
     
     #train-test split
