@@ -34,9 +34,11 @@ RSA
 
 This system implements a **supervised machine learning pipeline** for classifying mobile application network traffic using the **MIRAGE-2019 dataset**. The primary goal is to enable **Quality of Service (QoS) optimization** in mobile networks through accurate traffic classification without payload inspection, ensuring user privacy while maintaining high performance.
 
-PLease note dataset was too large to upload to GitHub but it can be downloaded from Kaggle: https://www.kaggle.com/datasets/programmerrdai/mirage-2019
+PLease note dataset was too large to upload to GitHub but it can be downloaded from Kaggle: https://www.kaggle.com/datasets/programmerrdai/mirage-2019  
 Should contain zip files from devices Google Nexus and Xiaomi Mi5 which was used for this project  
 I had taken the files from each device folder and combined them into one folder named /data
+
+Also the model is not available with these files. It was too large to upload. But if the script with code and dataset is set up as outined by this document it will be able to train the model and you should have your own model.pkl locally.
 
 ### Key Capabilities
 
