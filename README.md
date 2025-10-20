@@ -35,10 +35,9 @@ RSA
 This system implements a **supervised machine learning pipeline** for classifying mobile application network traffic using the **MIRAGE-2019 dataset**. The primary goal is to enable **Quality of Service (QoS) optimization** in mobile networks through accurate traffic classification without payload inspection, ensuring user privacy while maintaining high performance.
 
 PLease note dataset was too large to upload to GitHub but it can be downloaded from Kaggle: https://www.kaggle.com/datasets/programmerrdai/mirage-2019  
-Should contain zip files from devices Google Nexus and Xiaomi Mi5 which was used for this project  
-I had taken the files from each device folder and combined them into one folder named /data
+The downloaded dataset should contain zip files from devices Google Nexus and Xiaomi Mi5. For the purpose of this project JSON files from both devices were combined into one folder named "data". The script is able to open the folder and load each JSON file to extract labels from filename as well as extract flow-level statisticsal features from each file and combine it into a single CSV file Mirage.csv.
 
-Also the model.pkl is not available with the rest of the files. It was too large to upload. But if the script with code and dataset are downloaded and set up as outined by this document it will be able to train the model and you should have your own model.pkl locally as well as other output files in the output folder. The script creates output and chart folder if they are not already created.
+Also the model.pkl is not available with the rest of the files. It was too large to upload. But if the script with code and dataset are downloaded and set up as outined by this document it will be able to train the model and you should have your own model.pkl locally as well as other output files in the output folder. The script creates the "output" and "charts" folder if they are not already created.
 
 ### Key Capabilities
 
@@ -115,7 +114,7 @@ Each classified application receives detailed QoS recommendations:
 ⦁	**Dimensionality Reduction:** Optional LDA  
 ⦁	**Model Persistence:** Save/load trained models for reuse  
 
-### 5. **Visualization Suite**
+### 5. **Visualisation Charts**
 ⦁	Application traffic distribution bar chart (color-coded by priority)  
 ⦁	QoS priority distribution pie chart  
 ⦁	Latency sensitivity distribution pie chart  
@@ -162,7 +161,7 @@ Each classified application receives detailed QoS recommendations:
 #### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/tomRiddle-the1st/network_traffic_classification.git
-cd network-traffic-qos-classifier
+cd network_traffic_classification
 ```
 
 #### Step 2: Create Virtual Environment
@@ -192,26 +191,8 @@ python --version  # Should show Python 3.8+
 pip list | grep scikit-learn  # Verify scikit-learn installation
 ```
 
-### Method 2: Using Conda
-
-```bash
-# Create conda environment
-conda create -n traffic-classifier python=3.9
-
-# Activate environment
-conda activate traffic-classifier
-
-# Install dependencies
-conda install pandas numpy scikit-learn matplotlib seaborn joblib scipy
-pip install imbalanced-learn
-
-# Verify installation
-python -c "import pandas, sklearn, imblearn; print(' Installation successful!')"
-```
-
-### Method 3: Manual Installation
-
-If `requirements.txt` is not available, install packages individually:
+### Method 2: Manual Installation
+Install packages individually:
 ```bash
 pip install pandas>=1.3.0
 pip install numpy>=1.21.0
@@ -234,11 +215,23 @@ Create the following directory structure:
 project-root/
 ├── network_traffic_classification.py  # Main script
 ├── README.md                          # This file
-└── data/                              # Your dataset folder
-    ├── waze_traffic.json
-    ├── youtube_traffic.json
-    ├── spotify_traffic.json
-    └── ... (other application JSON files)
+└── data/                              # Your dataset folder, after downloading the dataset from Kaggle combine all files from each folder (Nexus and Mi5) into
+|   |                                    "data" folder
+|   ├── waze_traffic.json
+|   ├── youtube_traffic.json
+|   ├── spotify_traffic.json
+|   └── ... (other application JSON files)
+└──output/  #can create this folder or the script will create it for you
+|   ├── model.pkl
+|   ├── lda.pkl
+|   ├── feature_scaler.pkl
+|   └── Mirage.csv
+└─ charts/ # can create this folder or the script will create the folder charts that automactically saves the visualizations
+    ├── traffic_distribution.png
+    ├── priority_distribution.png    
+    ├── latency_sensitivity.png
+    ├── bandwidth_requirements.png
+    └── confusion_matrix.png
 ```
 
 ### 2. Verify Dataset Format
@@ -295,33 +288,110 @@ Saved aggregate dataset to Mirage_flows.csv
 Step 2: Preprocessing...
 Dataset shape: (121955, 102)
 Number of apps: 20
+Apps with number of flows:
+Label
+waze           11865
+iliga          11048
+accuweather    10682
+... (other applications)          
+Saved bar chart plot 
 [Bar chart displayed]
 
 Step 3: Train model...
 Applied Random Oversampling: (121955, 102) ...flows sample to (237300, 102)
+Class distribution after oversampling:
+Label
+twitter        11865
+youtube        11865
+spotify        11865
+slither        11865
+iliga          11865
+... (other applications) 
 Train set: (97564, 102)
 Test set: (24391, 102)
 Training model...
 Model training completed!
-Total training time: 2.00 minutes and 15.43 seconds
+Total training time: 2.00 minutes and 4.03 seconds
 
 Step 4: Evaluating model performance...
+Model Evaluation
 Accuracy: 0.8976
 Macro F1-Score: 0.8971
 Weighted F1-Score: 0.8971
+
+Classification Report:
+              precision  recall  f1-score     support
+accuweather      0.9044  0.8491    0.8759   2373.0000
+comics           0.9256  0.9284    0.9270   2373.0000
+dropbox          0.8902  0.8883    0.8893   2373.0000
+duolingo         0.8344  0.8453    0.8399   2373.0000
+facebook         0.8679  0.8858    0.8767   2373.0000
+foursquare       0.8988  0.8837    0.8912   2373.0000
+... (other applications)
+
+QoS Evaluation
+Performance by QoS Priority Level:
+High Priority Apps: F1=0.9323 (n=5 apps)
+Medium Priority Apps: F1=0.8845 (n=11 apps)
+Low Priority Apps: F1=0.8904 (n=4 apps)
+
 [Confusion matrix displayed]
-[Top features listed]
-[QoS recommendations printed]
+Saved plot: charts\confusion_matrix.png
+
+Top 10 Most Important Features:
+packet_length_upstream_flow_max
+packet_length_upstream_flow_std
+packet_length_upstream_flow_var
+packet_length_upstream_flow_90_percentile
+packet_length_downstream_flow_max
+packet_length_biflow_max
+iat_upstream_flow_max
+iat_biflow_max
+iat_downstream_flow_max
+packet_length_upstream_flow_mean
+
+QoS Policy Recommendations for each app
+accuweather:
+  Classification Confidence: 0.876
+  Recommended Priority: medium
+  Bandwidth Allocation: low
+  Latency Sensitivity: medium
+  Jitter Tolerance: high
+comics:
+Classification Confidence: 0.927
+  Recommended Priority: low
+  Bandwidth Allocation: medium
+  Latency Sensitivity: low
+  Jitter Tolerance: high
+(...other applications)
 
 Step 5: QoS analysis (with charts)...
 [Pie charts displayed]
-
+Priority Distribution:
+high  :  28920 flows ( 23.7%)
+medium:  71205 flows ( 58.4%)
+low   :  21830 flows ( 17.9%)
+	
+Latency Sensitivity Distribution:
+very_high :   3189 flows (  2.6%)
+high      :  19116 flows ( 15.7%)
+medium    :  73567 flows ( 60.3%)
+low       :  26083 flows ( 21.4%)
+	
+Bandwidth Distribution:
+high      :   6493 flows (  5.3%)
+medium    :  77930 flows ( 63.9%)
+low       :  32327 flows ( 26.5%)
+variable  :   5205 flows (  4.3%)
+Saved plot: charts\priority_distribution.png
+Saved plot: charts\latency_sensitivity.png
+Saved plot: charts\bandwidth_requirements.png
 Saving Model and Metadata
-Model and metadata saved to model.pkl
-Feature scaler saved to feature_scaler.pkl
-
+Model and metadata saved to output\model.pkl
+Feature scaler saved to output\feature_scaler.pkl
 Execution completed successfully
-Total execution time: 5 minutes and 32.18 seconds
+Total execution time: 3.0 minutes and 6.14 seconds
+
 ```
 
 ---
@@ -502,18 +572,6 @@ qos_policies = {
     }
 }
 ```
-
-**QoS Policy Guidelines:**
-
-| Application  | Priority | Bandwidth | Latency | Jitter |
-|-----------------|----------|-----------|---------|--------|
-| Waze | High | Medium | High | Low |
-| Spotify | High | Medium | Very High | Very Low |
-| Facebook | Medium | High | Medium | Medium |
-| Messenger | Medium | Medium | Medium | High |
-| Comic | Low | Variable | Low | High |
-| iliga | Low | Low | Low | High |
-
 ---
 
 ## Usage Guide
@@ -535,79 +593,6 @@ use_lda = True
 top_features = 20
 ```
 
-```bash
-python network_traffic_classification.py
-```
-
-### Using the Trained Model
-
-#### Loading and Using a Saved Model
-
-```python
-import joblib
-import pandas as pd
-import numpy as np
-
-# Load the trained model
-model_info = joblib.load('model.pkl')
-model = model_info['model']
-scaler = model_info['scaler']
-qos_policies = model_info['qos_policies']
-
-# Load new data (ensure same preprocessing)
-new_data = pd.read_csv('new_traffic_data.csv')
-X_new = new_data.drop(columns=['flow_id', 'Label'])
-X_new = X_new.fillna(0)
-
-# Scale features
-X_new_scaled = scaler.transform(X_new)
-
-# Make predictions
-predictions = model.predict(X_new_scaled)
-confidence = model.predict_proba(X_new_scaled)
-
-# Get QoS recommendations
-for pred in predictions:
-    policy = qos_policies.get(pred, qos_policies['default'])
-    print(f"Application: {pred}")
-    print(f"  Priority: {policy['priority']}")
-    print(f"  Bandwidth: {policy['bandwidth']}")
-```
-
-### Batch Processing Multiple Datasets
-
-```python
-import os
-from glob import glob
-
-data_folders = ['dataset1', 'dataset2', 'dataset3']
-
-for folder in data_folders:
-    print(f"Processing {folder}...")
-    data_folder = folder
-    
-    # Run the pipeline
-    data = aggregate()
-    X, y = preprocess(data)
-    model, X_test, y_test, scaler = train_model(X, y)
-    evaluate_model_with_qos(model, X_test, y_test, y)
-    
-    # Save model with folder-specific name
-    joblib.dump(model, f"model_{folder}.pkl")
-```
-
----
-
-## Output Files
-
-### Generated Files
-
-| File | Description | Size | Format |
-|------|-------------|------|--------|
-| `Mirage_flows.csv` | Cached processed dataset | Variable | CSV |
-| `model.pkl` | Trained Random Forest model | 150-200 MB | Pickle |
-| `feature_scaler.pkl` | StandardScaler parameters | <1 MB | Pickle |
-| `lda_transformer.pkl` | LDA transformer (if enabled) | <10 MB | Pickle |
 
 ### Model Information Structure
 
@@ -663,11 +648,11 @@ Step 5: QoS analysis...
 
 The system generates several plots:
 
-1. **Application Traffic Distribution** (Bar Chart)  
+1. **Traffic Distribution** (Bar Chart)  
 ⦁	   Shows number of flows per application  
 ⦁	   Color-coded by QoS priority level  
    
-2. **QoS Priority Distribution** (Pie Chart)  
+2. **Priority Distribution** (Pie Chart)  
 ⦁	   High, medium, low priority breakdown  
 ⦁	   Percentage and flow count annotations  
 
