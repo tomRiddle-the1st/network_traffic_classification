@@ -38,7 +38,7 @@ PLease note dataset was too large to upload to GitHub but it can be downloaded f
 Should contain zip files from devices Google Nexus and Xiaomi Mi5 which was used for this project  
 I had taken the files from each device folder and combined them into one folder named /data
 
-Also the model.pkl is not available with the rest of the files. It was too large to upload. But if the script with code and dataset are downloaded and set up as outined by this document it will be able to train the model and you should have your own model.pkl locally.
+Also the model.pkl is not available with the rest of the files. It was too large to upload. But if the script with code and dataset are downloaded and set up as outined by this document it will be able to train the model and you should have your own model.pkl locally as well as other output files.
 
 ### Key Capabilities
 
