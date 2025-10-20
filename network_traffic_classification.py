@@ -17,7 +17,7 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from imblearn.over_sampling import SMOTE, RandomOverSampler
 from sklearn.preprocessing import StandardScaler
 
-data_folder = "data" 
+data_folder = "data" #dataset 
 
 output_folder = "output"
 os.makedirs(output_folder, exist_ok=True)
@@ -28,12 +28,12 @@ os.makedirs(charts_folder, exist_ok=True)
 processed_data = os.path.join(output_folder, "Mirage_flows.csv")  
 Model = os.path.join(output_folder, "model.pkl")                 
 scaler_file = os.path.join(output_folder, "feature_scaler.pkl")   
-lda_file = os.path.join(output_folder, "lda_transformer.pkl")     
+lda_file = os.path.join(output_folder, "lda_transformer.pkl")   #saves if Lda is true  
 
 #toggle
 use_SMOTE = False
 use_random_oversampling = True 
-use_lda = True #dimension reduction
+use_lda = False #dimension reduction
 top_features = 10
 
 #-------------------------------------------- QoS Policy Mapping----------------------------------------------------------
@@ -80,7 +80,7 @@ qos_policies = {
     'default': {'priority': 'medium', 'bandwidth': 'medium', 'latency_sensitivity': 'medium', 'jitter_tolerance': 'medium'}
 }
 
-#-----------------------------Extract application label from dataset-------------------------------------------
+#------------------------------Extract application label from dataset filename-------------------------------------------
 def extract_label(filename):
     try:
         name_of_file = os.path.splitext(filename)[0]
@@ -101,7 +101,7 @@ def extract_label(filename):
 
         if not remaining_parts:
             return "unknown"
-
+        
         if "air.com.hypah.io.slither" in label:
             return "slither"
         if "com.contextlogic.wish" in label:
@@ -167,7 +167,7 @@ def process_file(file_path, label):
         label_clean = label.replace(",", "_").replace(" ", "_")
         row = {"flow_id": flow_id_clean, "Label": label_clean}
         
-        if 'flow_features' in flow:
+        if 'flow_features' in flow: #stats
             for feat_cat, stats in flow['flow_features'].items():
                 for direction, vals in stats.items():
                     for stat_name, val in vals.items():
@@ -179,7 +179,7 @@ def process_file(file_path, label):
 
 #-------------------------------------------------save plots-------------------------------------------------------
 def save_plot(fname):
-    try:
+    try: 
         path = os.path.join(charts_folder, fname)
         plt.savefig(path, bbox_inches="tight", dpi=200)
         print(f"Saved plot: {path}")
@@ -190,7 +190,7 @@ def save_plot(fname):
 #---------------------- Aggregate all JSON files into Mirage.csv --------------
 def aggregate():
     if os.path.exists(processed_data):
-        print(f"Using cached {processed_data}")
+        print(f"Using cached {processed_data}") #check for Mirage.csv
         return pd.read_csv(processed_data)
 
     data_files = []
@@ -214,15 +214,12 @@ def aggregate():
 
 #----------------------------------------preprocessing -------------------------
 def preprocess(data):
-    # Separate features and labels
-    X = data.drop(columns=["flow_id", "Label"], errors="ignore")
-    y = data["Label"]
+    X = data.drop(columns=["flow_id", "Label"], errors="ignore") #features
+    y = data["Label"] #labels
 
-    # Handle missing values
-    X = X.fillna(0)
-    
-    # Remove features with zero variance (constant features)
-    constant_features = X.columns[X.var() == 0]
+    X = X.fillna(0)    #handle missing values
+
+    constant_features = X.columns[X.var() == 0]     #remove features with zero
     if len(constant_features) > 0:
         print(f"Removing {len(constant_features)} constant features")
         X = X.drop(columns=constant_features)
@@ -232,7 +229,7 @@ def preprocess(data):
     print(f"App with number of flows:")
     print(y.value_counts())
 
-    # Application Traffic Bar Chart
+    #bar chart
     plt.figure(figsize=(16, 8))
     flows_table = y.value_counts().reset_index()
     flows_table.columns = ["App", "Flows"]
@@ -242,11 +239,11 @@ def preprocess(data):
     for app in flows_table["App"]:
         policy = map_to_qos_policy(app)
         if policy['priority'] == 'high':
-            colors.append('#0881a3')  #   high priority
+            colors.append('#0881a3')  #high priority
         elif policy['priority'] == 'medium':
-            colors.append('#ffd6a4')  #  medium priority
+            colors.append('#ffd6a4')  #medium priority
         else:
-            colors.append('#fde9df')  #   low priority
+            colors.append('#fde9df')  #low priority
     
     bars = plt.bar(range(len(flows_table)), flows_table["Flows"], color=colors)
     plt.title("Application Traffic FLows", fontsize=14, fontweight='bold')
@@ -254,7 +251,7 @@ def preprocess(data):
     plt.xlabel("Applications")
     plt.xticks(range(len(flows_table)), flows_table["App"], rotation=45, ha="right", fontsize=10)
     
-    # bar graph legend
+    #bar graph legend
     import matplotlib.patches as patches
     high_patch = patches.Patch(color='#0881a3', label='High Priority')
     med_patch = patches.Patch(color='#ffd6a4', label='Medium Priority')
@@ -270,19 +267,19 @@ def preprocess(data):
 def train_model(X, y):
     
     start_train  = time.time()
-    # Feature scaling
+    #feature scaling
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     X_scaled = pd.DataFrame(X_scaled, columns=X.columns, index=X.index)
     
-    # Save scaler for future use
+    #save scaler 
     joblib.dump(scaler, scaler_file)
     
-    # Apply oversampling based on configuration
+    #apply oversampling according to toggles above
     oversampling_method = None
     if use_SMOTE and use_random_oversampling:
         print("Warning: Both SMOTE and Random Oversampling enabled. Using Random Oversampling only.")
-        oversampling_method = "Random Oversampling"
+        oversampling_method = "Random Oversampling" #default if both sampling used
     elif use_SMOTE:
         oversampling_method = "SMOTE"
     elif use_random_oversampling:
@@ -304,23 +301,23 @@ def train_model(X, y):
         print("Class distribution after oversampling:")
         print(pd.Series(y_resampled).value_counts().head(10))
     
-    # Apply dimension reduction if enabled
+    #apply dimension reduction if enabled
     if use_lda:
         n_components = min(len(y.unique()) - 1, X_resampled.shape[1], 50)
         lda = LinearDiscriminantAnalysis(n_components=n_components)
         X_lda = lda.fit_transform(X_resampled, y_resampled)
         print(f"Applied LDA: {X_resampled.shape} ...features reduce to {X_lda.shape}")
         
-        # Convert back to DataFrame for consistency
+        #convert back to DataFrame for consistency
         X_final = pd.DataFrame(X_lda, columns=[f'LDA_{i+1}' for i in range(X_lda.shape[1])])
         
-        # Save LDA transformer
+        #save LDA transformer
         joblib.dump(lda, lda_file)
 
-    else:
+    else
         X_final = X_resampled
     
-    # Train-test split
+    #train-test split
     X_train, X_test, y_train, y_test = train_test_split(
         X_final, y_resampled, test_size=0.2, stratify=y_resampled, random_state=42
     )
@@ -328,7 +325,7 @@ def train_model(X, y):
     print(f"Train set: {X_train.shape}")
     print(f"Test set: {X_test.shape}")
     
-    # Random Forest model
+    #random Forest model
     rf_model = RandomForestClassifier(
         n_estimators=300,
         max_depth=25,
@@ -353,16 +350,13 @@ def train_model(X, y):
 
 #----------------------------------Map application to QoS policy ---------------------
 def map_to_qos_policy(app_label):
-    # Try exact match first
     if app_label in qos_policies:
         return qos_policies[app_label]
     
-    # Try partial matching for  labels
     for policy_key in qos_policies.keys():
         if policy_key in app_label.lower():
             return qos_policies[policy_key]
     
-    # Return default policy
     return qos_policies['default']
 
 #---------------------------   Analyze QoS requirements distribution----------------------------
@@ -385,7 +379,7 @@ def analyze_qos_requirements(y):
 #---------------------------------Pie charts -----------------------------
 def qos_chart_visualizations(y, priority_counts, latency_counts):
     
-    # 1. Priority 
+    #1.priority 
     plt.figure(figsize=(10, 8))
     priority_df = pd.DataFrame(list(priority_counts.items()), columns=['Priority', 'Flows'])
     colors_pie = ['#0881a3', '#ffd6a4', '#fde9df']  
@@ -396,12 +390,12 @@ def qos_chart_visualizations(y, priority_counts, latency_counts):
                                        startangle=90)
     plt.title("Traffic Distribution by QoS Priority", fontsize=14, fontweight='bold')
 
-    # Make percentage text more readable
+    #make percentage text more readable
     for autotext in autotexts:
         autotext.set_color('black')
         autotext.set_fontweight('bold')
 
-    # Priority legend 
+    #priority legend 
     import matplotlib.patches as patches
     legend_patches = []
     for priority, color in zip(priority_df['Priority'], colors_pie):
@@ -411,10 +405,10 @@ def qos_chart_visualizations(y, priority_counts, latency_counts):
     save_plot("priority_distribution.png")
     plt.show()
     
-    # 2. Latency 
+    #2.latency 
     plt.figure(figsize=(10, 8))
     latency_df_pie = pd.DataFrame(list(latency_counts.items()), columns=['Latency', 'Flows'])
-    latency_df_pie = latency_df_pie[latency_df_pie['Flows'] > 0]  # Filter zero flows
+    latency_df_pie = latency_df_pie[latency_df_pie['Flows'] > 0]  #filter zero flows
     colors_latency = ['#FF0000','#0881a3', '#ffd6a4', '#fde9df']  
     wedges, texts, autotexts = plt.pie(latency_df_pie['Flows'], 
                                        labels=latency_df_pie['Latency'], 
@@ -423,12 +417,12 @@ def qos_chart_visualizations(y, priority_counts, latency_counts):
                                        startangle=90)
     plt.title("Traffic Distribution by Latency Sensitivity", fontsize=14, fontweight='bold')
 
-    # Make percentage text more readable
+    #make percentage text more readable
     for autotext in autotexts:
         autotext.set_color('black')
         autotext.set_fontweight('bold')
 
-    # Latency legend 
+    #latency legend 
     import matplotlib.patches as patches
     legend_patches = []
     for latency, color in zip(latency_df_pie['Latency'], colors_latency[:len(latency_df_pie)]):
@@ -438,7 +432,7 @@ def qos_chart_visualizations(y, priority_counts, latency_counts):
     save_plot("latency_sensitivity.png")
     plt.show()
 
-    # 3. Bandwidth 
+    #3.bandwidth 
     plt.figure(figsize=(10, 8))
     bandwidth_counts = {}
     for label in y.unique():
@@ -461,7 +455,7 @@ def qos_chart_visualizations(y, priority_counts, latency_counts):
         autotext.set_color('black')
         autotext.set_fontweight('bold')
 
-    # Bandwidth legend
+    #bandwidth legend
     import matplotlib.patches as patches
     legend_patches = []
     for bandwidth, color in zip(bandwidth_df['Bandwidth'], colors_bandwidth[:len(bandwidth_df)]):
@@ -476,10 +470,10 @@ def qos_chart_visualizations(y, priority_counts, latency_counts):
 def evaluate_model_with_qos(model, X_test, y_test, y):
     print("Model Evaluation")
     
-    # Basic predictions
+    #basic predictions
     y_pred = model.predict(X_test)
     
-    # metrics
+    #evaluation metrics
     accuracy = accuracy_score(y_test, y_pred)
     f1_macro = f1_score(y_test, y_pred, average='macro')
     f1_weighted = f1_score(y_test, y_pred, average='weighted')
@@ -488,18 +482,18 @@ def evaluate_model_with_qos(model, X_test, y_test, y):
     print(f"Macro F1-Score: {f1_macro:.4f}")
     print(f"Weighted F1-Score: {f1_weighted:.4f}")
     
-    # Classification report
+    #classification report
     report = classification_report(y_test, y_pred, output_dict=True, zero_division=0)
     report_df = pd.DataFrame(report).transpose()
     
     print("\n Classification Report:")
     print(report_df.round(4))
     
-    # QoS-specific evaluation
+    #QoS-specific evaluation
     print("\n")
     print("QoS Evaluation")
     
-    # Group performance by QoS priority levels
+    #group performance by QoS priority levels
     qos_performance = {'high': [], 'medium': [], 'low': []}
     
     unique_labels = list(set(y_test.unique()) | set(y_pred))
@@ -516,7 +510,7 @@ def evaluate_model_with_qos(model, X_test, y_test, y):
         else:
             print(f"{priority.capitalize()} Priority Apps: No apps in test set")
     
-    # Confusion Matrix
+    #confusion Matrix
     print("\n Confusion Matrix...")
     cm = confusion_matrix(y_test, y_pred, labels=model.classes_)
     plt.figure(figsize=(14, 12))
@@ -530,7 +524,7 @@ def evaluate_model_with_qos(model, X_test, y_test, y):
     save_plot("confusion_matrix.png")
     plt.show()
 
-    # Top features 
+    #top features identifed by RF 
     if use_lda == False:
         if hasattr(model, 'feature_importances_') and len(X_test.columns) == len(model.feature_importances_):
             top_features_list = pd.Series(model.feature_importances_, index=X_test.columns).sort_values(ascending=False).head(top_features)
@@ -556,7 +550,7 @@ def evaluate_model_with_qos(model, X_test, y_test, y):
 def qos_analysis_and_charts(y):    
   
     
-    # QoS Analysis
+    #QoS Analysis
     qos_analysis, priority_counts, latency_counts, bandwidth_counts = analyze_qos_requirements(y)
     
     print(f"\nPriority Distribution:")
@@ -575,10 +569,10 @@ def qos_analysis_and_charts(y):
         percentage = (count / total_flows) * 100
         print(f"{bandwidth:10}: {count:6d} flows ({percentage:5.1f}%)")
 
-    #  pie charts and heatmap
+    #pie charts
     qos_chart_visualizations(y, priority_counts, latency_counts)
     
-    # Group applications by priority for recommendations
+    #group applications by priority for recommendations
     high_priority_apps = []
     medium_priority_apps = []
     low_priority_apps = []
@@ -599,36 +593,36 @@ def qos_analysis_and_charts(y):
         else:
             low_priority_apps.append(app_info)
     
-    # flow count (descending)
+    #flow count (descending)
     high_priority_apps.sort(key=lambda x: x['flows'], reverse=True)
     medium_priority_apps.sort(key=lambda x: x['flows'], reverse=True)
     low_priority_apps.sort(key=lambda x: x['flows'], reverse=True)
 
-# Main 
+#main 
 start_time = time.time()
 print("NETWORK TRAFFIC CLASSIFICATION")
 try:
-    # Step 1: Data aggregation
+    #flow aggregation
     print("\nStep 1: Aggregating flow data...")
     data = aggregate()
         
-    # Step 2: Preprocessing
+    #pre-processing
     print("\nStep 2: Preprocessing...")
     X, y = preprocess(data)
         
-    # Step 3: Model training
+    #model training
     print("\nStep 3: Train model...")
     model, X_test, y_test, scaler = train_model(X, y)
         
-    # Step 4: Model evaluation 
+    #model evaluation 
     print("\nStep 4: Evaluating model performance...")
     evaluate_model_with_qos(model, X_test, y_test, y)
         
-    # Step 5: shows pie charts 
+    #pie charts 
     print("\nStep 5: QoS analysis (with charts)...")
     qos_analysis_and_charts(y)
         
-    # Step 6: Save model
+    #save model
     print("Saving Model and Metadata")
         
     model_info = {
@@ -663,6 +657,3 @@ try:
 except Exception as e:
     print(f" Error during execution: {str(e)}")
     raise
-
-
-
