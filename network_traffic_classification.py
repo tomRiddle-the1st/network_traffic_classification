@@ -22,7 +22,7 @@ data_folder = "data" #dataset
 output_folder = "output" #folder to saved model, scaler, lda and Mirage
 os.makedirs(output_folder, exist_ok=True)
 
-charts_folder = "charts" #folder to save charts
+charts_folder = "charts" #folder to save bar charts and pie charts
 os.makedirs(charts_folder, exist_ok=True) 
 
 #gets saved to output folder
