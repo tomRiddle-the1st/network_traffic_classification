@@ -1,34 +1,32 @@
-# User Manual: Network Traffic Classification for QoS Improvement
+User Manual: Network Traffic Classification for QoS Improvement
 
-**Author:** Mohammed Aqeel Ismail  
-**Institution:** School of Mathematics,   
-Statistics and Computer Science,  
+Author: Mohammed Aqeel Ismail  
+Institution:School of Mathematics, Statistics and Computer Science,    
 College of Agriculture, Engineering and Science,   
 University of KwaZulu-Natal, Pietermaritzburg Campus,   
-Pietermaritzburg 3201,  
-RSA  
-## 1. Introduction
+Pietermaritzburg 3201, RSA   
+ 1. Introduction
 
-### 1.1 What is This System?
+ 1.1 What is This System?
 
 This Network Traffic Classification System is a machine learning-based tool that  identifies mobile applications from their 
 network traffic patterns and recommends Quality of Service (QoS) policies for optimal network performance.
 
-**Key Benefits:**
-- **Privacy-Preserving:** Works without inspecting packet content  
-- **High Accuracy:** 89.76% classification accuracy  
-- **Automated QoS:** Generates priority, bandwidth, and latency recommendations  
-- **Easy to Use:** Simple configuration and execution  
+Key Benefits:
+- Privacy-Preserving:Works without inspecting packet content  
+- High Accuracy: 89.76% classification accuracy  
+- Automated QoS: Generates priority, bandwidth, and latency recommendations  
+- Easy to Use: Simple configuration and execution  
 
-### 1.2 Who Should Use This Manual?  
+ 1.2 Who Should Use This Manual?  
 
 This manual is designed for:  
-- **Researchers** studying network traffic classification  
-- **Network Engineers** implementing QoS policies  
-- **Students** learning about machine learning in networking  
-- **Developers** building traffic management systems  
+- Researchers studying network traffic classification  
+- Network Engineers implementing QoS policies  
+- Students learning about machine learning in networking  
+- Developers building traffic management systems  
 
-### 1.3 What You'll Learn
+ 1.3 What You'll Learn
 
 By following this manual, you will:  
 1. Install and configure the classification system  
@@ -38,14 +36,14 @@ By following this manual, you will:
 5. Evaluate and improve classification accuracy  
 6. Deploy trained models in production  
 
-### 1.4 Prerequisites
+ 1.4 Prerequisites
 
-**Basic Knowledge Required:**  
+Basic Knowledge Required:  
 - Familiarity with command line/terminal  
 - Basic understanding of Python  
 - Knowledge of network concepts (flows, packets)  
 
-**Technical Requirements:**  
+Technical Requirements:  
 - Computer with 8GB+ RAM (16GB recommended)  
 - Python 3.8 or higher installed  
 - 5GB+ free disk space  
@@ -54,9 +52,9 @@ By following this manual, you will:
 
 ---
 
-## 2. Getting Started
+ 2. Getting Started
 
-### 2.1 Quick Start Checklist  
+ 2.1 Quick Start Checklist  
 
 Before diving in, ensure you have:  
 
@@ -68,24 +66,23 @@ Before diving in, ensure you have:
 - [ ] 30-60 minutes for first-time setup  
 
 
-
-### 2.2 What You'll Get  
+ 2.2 What You'll Get  
 
 After running the system, you will have:  
 
-1. **Trained Model** (`model.pkl`) - Ready for deployment with lda.pkl and feature_scaler.pkl
-2. **Performance Metrics** - Accuracy, F1-scores, confusion matrix  
-3. **QoS Recommendations** - Priority levels for each application  
-4. **Visualizations** - bar charts and pie chart showing traffic distribution and performance  
-5. **Processed Dataset** (`Mirage_flows.csv`) - For future analysis  
+1. Trained Model (`model.pkl`) - Ready for deployment with lda.pkl and feature_scaler.pkl
+2. Performance Metrics - Accuracy, F1-scores, confusion matrix  
+3. QoS Recommendations - Priority levels for each application  
+4. Visualizations - bar charts and pie chart showing traffic distribution and performance  
+5. Processed Dataset (`Mirage_flows.csv`) - For future analysis  
 
 ---
 
-## 3. Installation Guide
+ 3. Installation Guide
 
-### 3.1 Installing Python
+ 3.1 Installing Python
 
-#### Windows
+Windows
 
 1. Download Python from [python.org](https://www.python.org/downloads/)  
 2. Run the installer  
@@ -97,118 +94,49 @@ After running the system, you will have:
    ```
    Should show: `Python 3.8.x` or higher
 
-#### macOS
+ 3.2 Downloading the Project
 
-**Option 1: Using Homebrew (Recommended)**
-```bash
-# Install Homebrew if not already installed
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Install Python
-brew install python@3.9
-
-# Verify
-python3 --version
-```
-
-**Option 2: Download from python.org**  
-1. Visit [python.org/downloads/macos](https://www.python.org/downloads/macos/)  
-2. Download the macOS installer  
-3. Run the .pkg file  
-4. Follow installation prompts  
-
-#### Linux (Ubuntu/Debian)
+ Option 1: Using Git (Recommended)
 
 ```bash
-# Update package list
-sudo apt update
+ Install Git if needed  
+ Windows: Download from git-scm.com  
+]
 
-# Install Python and pip
-sudo apt install python3.9 python3-pip
-
-# Verify installation
-python3 --version
-pip3 --version
-```
-
-### 3.2 Downloading the Project
-
-#### Option 1: Using Git (Recommended)
-
-```bash
-# Install Git if needed  
-# Windows: Download from git-scm.com  
-# macOS: brew install git  
-# Linux: sudo apt install git  
-
-# Clone the repository
+ Clone the repository
 git clone https://github.com/tomRiddle-the1st/network_traffic_classification.git   
 
-# Navigate to project directory
+ Navigate to project directory
 cd network_traffic_classification
 ```
 
-#### Option 2: Direct Download
+ Option 2: Direct Download
 
 1. Visit the GitHub repository  
 2. Click "Code" → "Download ZIP"  
 3. Extract the ZIP file to your desired location  
 4. Open terminal/command prompt in that folder  
 
-### 3.3 Setting Up Virtual Environment  
-
-A virtual environment keeps your project dependencies isolated.  
-
-#### Windows
-
-```cmd
-# Navigate to project folder
-cd path\to\network_traffic_classification
-
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-venv\Scripts\activate
-
-# You should see (venv) in your prompt
-```
-
-#### macOS/Linux
-
-```bash
-# Navigate to project folder
-cd path/to/network_traffic_classification
-
-# Create virtual environment
-python3 -m venv venv
-
-# Activate virtual environment
-source venv/bin/activate
-
-# You should see (venv) in your prompt
-```
-
-### 3.4 Installing Dependencies
+### 3.3 Installing Dependencies
 
 With your virtual environment activated:
 
 ```bash
-# Install all required packages
+ Install all required packages
 pip install -r requirements
 
-# must install the following requirements (can be done manually):
-# - pandas (data manipulation)  
-# - numpy (numerical computing)  
-# - scikit-learn (machine learning)  
-# - matplotlib (plotting)  
-# - seaborn (statistical visualization)  
-# - imbalanced-learn (handling class imbalance)  
-# - joblib (model persistence)  
-# - scipy (scientific computing)  
+ must install the following requirements (can be done manually):
+ - pandas (data manipulation)  
+ - numpy (numerical computing)  
+ - scikit-learn (machine learning)  
+ - matplotlib (plotting)  
+ - seaborn (statistical visualization)  
+ - imbalanced-learn (handling class imbalance)  
+ - joblib (model persistence)  
+ - scipy (scientific computing)  
 ```
 
-**Installation Progress:**
+Installation Progress:
 ```
 Collecting pandas>=1.3.0
   Downloading pandas-1.5.3.tar.gz (5.2 MB)
@@ -218,7 +146,7 @@ Collecting numpy>=1.21.0
 Successfully installed pandas-1.5.3 numpy-1.24.2 scikit-learn-1.2.1 ...
 ```
 
-### 3.5 Verifying Installation
+ 3.4 Verifying Installation
 
 Run this verification script:
 
@@ -242,7 +170,7 @@ print(f'  - seaborn: {seaborn.__version__}')
 "
 ```
 
-**Expected Output:**
+Expected Output:
 ```
  All dependencies installed successfully!  
   - pandas: 1.5.3  
@@ -252,93 +180,80 @@ print(f'  - seaborn: {seaborn.__version__}')
   - seaborn: 0.12.2  
 ```
 
-### 3.6 Troubleshooting Installation
+ 3.5 Troubleshooting Installation
 
-#### Problem: "pip: command not found"
+ Problem: "pip: command not found"
 
-**Solution:**
+Solution:
 ```bash
-# Try using python -m pip instead
-python -m pip install -r requirements.txt
+ Try using python -m pip instead
+python -m pip install -r requirements # see README file has requirements install manually
 
-# Or python3 on macOS/Linux
-python3 -m pip install -r requirements.txt
-```
 
-#### Problem: "Permission denied"
+ Problem: Package installation fails
 
-**Solution (Linux/macOS):**
+Solution:
 ```bash
-# Don't use sudo with virtual environments
-# Instead, ensure virtual environment is activated
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-#### Problem: Package installation fails
-
-**Solution:**
-```bash
-# Update pip first
+Update pip first
 pip install --upgrade pip
 
-# Then retry
-pip install -r requirements.txt
+ Then retry
+pip install -r requirements #see README file has requirements
 
-# If still failing, install packages individually
+ If still failing, install packages individually
 pip install pandas
 pip install numpy
 pip install scikit-learn
-# ... etc
+ ... etc
 ```
 
 ---
 
-## 4. Understanding the System
+ 4. Understanding the System
 
-### 4.1 How It Works
+ 4.1 How It Works
 
 The system operates in five main steps:
 
-#### Step 1: Data Aggregation    
+ Step 1: Data Aggregation    
 - Reads JSON files from the `data/` folder  
 - Extracts application labels from filenames  
 - Converts flow features into tabular format  
 - Saves processed data to `Mirage_flows.csv`  
  
-#### Step 2: Preprocessing  
+Step 2: Preprocessing  
 - Removes constant features (zero variance)  
 - Handles missing values  
 - Standardizes feature scales  
 - Analyzes class distribution  
 
-#### Step 3: Model Training  
+ Step 3: Model Training  
 - Applies Random Oversampling to balance classes  
 - Optional: Applies Linear Discriminant Analysis (LDA)  
 - Trains Random Forest classifier (300 trees)  
 - Splits data: 80% training, 20% testing  
 
-#### Step 4: Model Evaluation  
+ Step 4: Model Evaluation  
 - Calculates accuracy and F1-scores  
 - Generates confusion matrix  
 - Identifies top important features  
 - Evaluates QoS priority-level performance  
  
-#### Step 5: QoS Analysis  
+ Step 5: QoS Analysis  
 - Maps applications to QoS policies  
 - Generates distribution charts  
-- Provides deployment recommendations  
+- Provides QoS recommendations  
 
-### 4.2 Key Concepts
+ 4.2 Key Concepts
 
-#### Network Flows  
-A **flow** is a sequence of packets sharing:   
+ Network Flows  
+A flow is a sequence of packets sharing:   
 - Source IP and port   #part of flow id
 - Destination IP and port  #part of flow id
 - Transport protocol (TCP/UDP)  
 - Time window  
 
-**Sample Flow Features:**  
+Sample Flow Features:  
 ```
 json
 {
@@ -375,51 +290,51 @@ json
 } 
 ```
 
-#### Feature Extraction
+ Feature Extraction
 The system uses statistical features:  
-- **Packet Length:** Mean, std, min, max  
-- **Inter-Arrival Time:** Time between packets  
-- **Flow Duration:** Total connection time  
-- **Packet Count:** Forward and backward  
-- **Direction:** Upstream vs downstream traffic  
+- Packet Length: Mean, std, min, max  
+- Inter-Arrival Time: Time between packets  
+- Flow Duration: Total connection time  
+- Packet Count: Forward and backward  
+- Direction: Upstream vs downstream traffic  
 
-#### QoS Policies  
-Each application gets four QoS parameters:   =#as well as classification confidence
+QoS Policies  
+Each application gets four QoS parameters:   # as well as classification confidence
 
-1. **Priority:** How urgently traffic should be handled  
+1. Priority: How urgently traffic should be handled  
    - High: Real-time apps (Waze, Messenger)  
    - Medium: Interactive apps (YouTube, Facebook)  
    - Low: Background apps (Dropbox, Trello)  
 
-2. **Bandwidth:** Required data rate  
+2. Bandwidth: Required data rate  
    - High: Video streaming (YouTube)  
    - Medium: Music streaming (Spotify)  
    - Low: Text-based apps (Twitter)  
 
-3. **Latency Sensitivity:** Delay tolerance  
+3. Latency Sensitivity: Delay tolerance  
    - Very High: Gaming (Slither.io)  
    - High: Navigation (Waze)  
    - Medium: Social media (Facebook)  
    - Low: File storage (Dropbox)  
 
-4. **Jitter Tolerance:** Packet delay variation acceptance
+4. Jitter Tolerance: Packet delay variation acceptance
    - Very Low: Gaming  
    - Low: VoIP (Viber)  
    - Medium: Streaming  
    - High: Downloads  
 
-### 4.3 Machine Learning Techniques
+ 4.3 Machine Learning Techniques
 
-#### Random Forest Classifier
+ Random Forest Classifier
 An ensemble of decision trees that votes on classifications.
 
-**Advantages:**  
+Advantages: 
 - Robust to overfitting  
 - Handles non-linear relationships  
 - Provides feature importance  
 - Works well with imbalanced data  
 
-**Configuration:**  
+Configuration:  
 ```python  
 RandomForestClassifier(
     n_estimators=300,      # 300 decision trees
@@ -428,10 +343,10 @@ RandomForestClassifier(
 )
 ```
 
-#### Random Oversampling
+ Random Oversampling
 Duplicates minority class samples to balance dataset.
 
-**Before Oversampling:**
+Before Oversampling:
 ```
 waze:      11865 flows  <-- Majority class
 youtube:    6493 flows   
@@ -445,17 +360,17 @@ youtube:  11855 flows
 spotify:  11855 flows
 ```
 
-#### Linear Discriminant Analysis (Optional)
+ Linear Discriminant Analysis (Optional)
 Reduces feature dimensions while preserving class separability.
 
-**Example:**
+Example:
 - Input: 102 features
 - Output: 19 LDA components (for 20 classes)
 - Benefit: Faster training, reduced overfitting
 
-### 4.4 Performance Metrics
+ 4.4 Performance Metrics
 
-#### Accuracy
+Accuracy
 Percentage of correctly classified flows:
 ```
 Accuracy = (Correct Predictions) / (Total Predictions)
@@ -463,7 +378,7 @@ Accuracy = (Correct Predictions) / (Total Predictions)
          = 89.76%
 ```
 
-#### F1-Score
+ F1-Score
 Harmonic mean of precision and recall:
 ```
 Precision = True Positives / (True Positives + False Positives)
@@ -471,41 +386,40 @@ Recall = True Positives / (True Positives + False Negatives)
 F1-Score = 2 × (Precision × Recall) / (Precision + Recall)
 ```
 
-**Interpretation:**
+Interpretation:
 - F1 = 1.0: Perfect classification
 - F1 > 0.9: Excellent
 - F1 = 0.7-0.9: Good
 - F1 < 0.7: Needs improvement
 
-#### Confusion Matrix
+ Confusion Matrix
 Shows actual vs predicted classifications:
 Script generates a Confusion matrix as a png file
 
-
-**Reading the Matrix:**
-- Diagonal: Correct classifications
-- Off-diagonal: Misclassifications
+Reading the Matrix:
+- Diagonal: Correct classifications in red
+- Off-diagonal: Misclassifications in blue
 - y-axis: Actual class counts
 - x-axis: Predicted class counts
 
 ---
 
-## 5. Preparing Your Data
+ 5. Preparing Your Data
 
-### 5.1 Using the MIRAGE-2019 Dataset
+5.1 Using the MIRAGE-2019 Dataset
 
-#### Downloading MIRAGE-2019
+ Downloading MIRAGE-2019
 
-1. **Visit Kaggle:**  
+1. Visit Kaggle:  
    - Go to: https://www.kaggle.com/datasets/programmerrdai/mirage-2019  
    - Create a Kaggle account if needed  
 
-2. **Download the Dataset:**
+2. Download the Dataset:
    - Click "Download" (may require verification)  
    - Extract the ZIP file  
    - You'll see folders for two devices Google Nexus and Xiaomi Mi5  
 
-3. **Organize Files:**
+3. Organize Files:
    ```bash  
    # Create data directory in your project
    mkdir data
@@ -543,9 +457,9 @@ The system recognizes these MIRAGE-2019 applications:
 | Duolingo | com.duolingo | Low |
 | Comics | com.iconology.comics | Low |
 
-### 5.2 Dataset Structure
+ 5.2 Dataset Structure
 
-#### JSON File Format
+ JSON File Format
 
 Each JSON file contains multiple network flows:
 
@@ -588,7 +502,7 @@ Each JSON file contains multiple network flows:
 }
 ```
 
-#### Required Feature Structure
+Required Feature Structure
 
 The system expects these feature categories:
 - `packet_length`: Statistics on packet sizes  
@@ -606,13 +520,13 @@ Each direction should include:
 - `min`: Minimum value  
 - `max`: Maximum value  
  
-### 5.3 Using Custom Datasets
+ 5.3 Using Custom Datasets
 
-#### Format Requirements
+ Format Requirements
 
 To use your own traffic data:
 
-1. **Convert to JSON format:**
+1. Convert to JSON format:
    ```python
    import json
    
@@ -631,12 +545,12 @@ To use your own traffic data:
        json.dump(flows, f, indent=2)
    ```
 
-2. **Name files with application identifier:**  
+2. Name files with application identifier:  
    - Good: `com.myapp_2025_01_15.json`  
    - Good: `mycompany.myapp_flows.json`  
    - Bad: `traffic_data.json` (no app identifier)  
 
-3. **Place files in data/ directory:**
+3. Place files in data/ directory: #or rename the folder for the dataset in the script 
    ```
    data/
     ├── com.waze_*.json
@@ -645,14 +559,14 @@ To use your own traffic data:
     └── ... (other application JSON files from BOTH devices)
    ```
 
-#### Updating Label Extraction
+ Updating Label Extraction
 
 If your filenames don't match the expected pattern, modify the `extract_label()` function according to your dataset needs:
 
 ```python
 def extract_label(filename):
     # Example: Extract from custom format
-    # Filename: "myapp_traffic_2025.json" → Label: "myapp"
+    # Filename: "myapp_traffic_2025.json" --> Label: "myapp"
     
     name = os.path.splitext(filename)[0]
     
@@ -665,7 +579,7 @@ def extract_label(filename):
     # ... (keep existing code)
 ```
 
-#### Adding Custom QoS Policies
+ Adding Custom QoS Policies
 
 Define QoS requirements for your applications:
 
@@ -687,13 +601,13 @@ qos_policies = {
 }
 ```
 
-### 5.4 Data Quality Checks
+ 5.4 Data Quality Checks
 
-#### Verifying Your Dataset
+ Verifying Your Dataset
 
 Before running the system, check:
 
-**1. File Count:**
+1. File Count:
 ```bash
 # Count JSON files
 ls data/*.json | wc -l
@@ -701,7 +615,7 @@ ls data/*.json | wc -l
 # Should have at least 3-5 files for meaningful results
 ```
 
-**2. File Sizes:**
+2. File Sizes:
 ```bash
 # Check file sizes
 ls -lh data/
@@ -710,7 +624,7 @@ ls -lh data/
 # Files < 1KB are likely empty or corrupted
 ```
 
-**3. JSON Validity:**
+3. JSON Validity:
 ```python
 import json
 import os
@@ -723,10 +637,10 @@ for file in os.listdir(data_folder):
                 json.load(f)
             print(f" {file}")
         except json.JSONDecodeError:
-            print(f"✗ {file} - INVALID JSON")
+            print(f" {file} - INVALID JSON")
 ```
 
-**4. Flow Count:**
+4. Flow Count:
 ```python
 import json
 import os
@@ -741,12 +655,12 @@ for file in os.listdir("data"):
             total_flows += flows
 
 print(f"\nTotal flows: {total_flows}")
-# Aim for 1000+ flows per application
+ Aim for 1000+ flows per application
 ```
 
-#### Common Data Issues
+ Common Data Issues
 
-**Issue 1: Inconsistent Feature Names**
+Issue 1: Inconsistent Feature Names
 ```python  
 # Problem: Features named differently across files  
 # file1.json: "packet_length"  
@@ -775,25 +689,16 @@ X = X.clip(lower=X.quantile(0.01), upper=X.quantile(0.99), axis=1)
 
 ---
 
-## 6. Running the Classification System
+ 6. Running the Classification System
 
-### 6.1 First Run
+6.1 First Run
 
-#### Step-by-Step Execution
+ Step-by-Step Execution
 
-**1. Activate Virtual Environment:**
-```bash
-# Windows
-venv\Scripts\activate
+**1. Verify Data:**
 
-# macOS/Linux
-source venv/bin/activate
-```
-
-**2. Verify Data:**
-```bash
 # Check data directory exists
-ls data/
+ data/
 
 # Should see JSON files
 com.waze_flows.json
@@ -801,12 +706,11 @@ com.spotify.music_flows.json
 ...
 ```
 
-**3. Run the System:**
-```bash
-python network_traffic_classification.py
-```
+**2. Run the System:**
+ network_traffic_classification.py
 
-**4. Monitor Progress:**
+
+3. Monitor Progress:
 The system will print status updates:
 ```
 NETWORK TRAFFIC CLASSIFICATION
@@ -821,7 +725,8 @@ Saved aggregate dataset to output/Mirage_flows.csv
 Step 2: Preprocessing...  
 Dataset shape: (121955, 102)  
 Number of apps: 20  
-[Bar chart displayed showing traffic distribution]  
+[Bar chart displayed showing traffic distribution]
+Saves bar chart to charts/
 
 Step 3: Train model...  
 Applied Random Oversampling: (121955, 102) ...flows sample to (237300, 102)  
@@ -845,6 +750,7 @@ high  :  45234 flows ( 18.7%)
 medium: 178456 flows ( 73.8%)  
 low   :  13610 flows (  5.6%)  
 [Pie charts displayed]  
+Saves pie chart to charts/
 
 Saving Model and Metadata  
 Model and metadata saved to output/model.pkl  
@@ -854,9 +760,9 @@ Execution completed successfully
 Total execution time: 5 minutes and 32.18 seconds  
 ```
 
-### 6.2 Understanding Console Output
+ 6.2 Understanding Console Output
 
-#### Step 1 Output  
+ Step 1 Output  
 ```
 Processing waze with 1234 flows  
 ```
@@ -864,13 +770,13 @@ Processing waze with 1234 flows
 - Flow count indicates data volume  
 - Warning if <100 flows (may affect accuracy)  
 
-#### Step 2 Output  
+ Step 2 Output  
 ```
 Dataset shape: (121955, 102)  
 Number of apps: 20  
 ```
 - First number: Total flows  
-- Second number: Total features   
+- Second number: Total features    
 - Apps count: Number of applications  
 
 A bar chart will appear showing:  
@@ -878,7 +784,7 @@ A bar chart will appear showing:
 - Y-axis: Number of flows  
 - Colors: QoS priority (blue=high, orange=medium, peach=low)  
 
-#### Step 3 Output  
+ Step 3 Output  
 ```
 Applied Random Oversampling: (121955, 102) ...flows sample to (237300, 102)  
 Train set: (189840, 102)  
@@ -889,22 +795,22 @@ Test set: (47460, 102)
 - 20% reserved for testing  
 - Training time: Typically 2-5 minutes  
 
-#### Step 4 Output
+ Step 4 Output
 ```
 Accuracy: 0.8976  
 Macro F1-Score: 0.8971  
 Weighted F1-Score: 0.8971  
 ```
-- **Accuracy:** Overall correctness (89.76% is excellent)  
-- **Macro F1:** Average performance across all apps  
-- **Weighted F1:** Performance weighted by class size  
+- Accuracy: Overall correctness (89.76% is excellent)  
+- Macro F1: Average performance across all apps  
+- Weighted F1: Performance weighted by class size  
 
 A confusion matrix heatmap appears showing:  
 - Correct classifications (diagonal)  
 - Misclassifications (off-diagonal)  
 - Color intensity indicates count  
 
-#### Step 5 Output
+ Step 5 Output
 ```
 Priority Distribution:
 high  :  45234 flows ( 18.7%)  
@@ -914,20 +820,20 @@ low   :  13610 flows (  5.6%)
 Shows how traffic is distributed across QoS priorities.  
 
 Three pie charts appear:  
-1. **Priority Distribution:** High/Medium/Low  
-2. **Latency Sensitivity:** Very High/High/Medium/Low  
-3. **Bandwidth Requirements:** High/Medium/Low/Variable  
+1. Priority Distribution: High/Medium/Low  
+2. Latency Sensitivity: Very High/High/Medium/Low  
+3. Bandwidth Requirements: High/Medium/Low/Variable  
 
-### 6.3 Interacting with Visualizations  
+ 6.3 Interacting with Visualizations  
 
-#### Viewing Charts  
+ Viewing Charts  
 
 When charts appear:  
-- **Close Window:** Click X or press Q  
-- **Save Chart:** Right-click → Save to desired folder
-- **OR Charts get saved to charts folder via script
-- **Zoom:** Use toolbar buttons  
-- **Pan:** Hold and drag  
+- Close Window: Click X or press Q  
+- Save Chart: Right-click → Save to desired folder
+- OR Charts get saved to charts folder via script
+- Zoom: Use toolbar buttons  
+- Pan: Hold and drag  
 
 Charts are automatically saved to `output/charts/`:
 - `traffic_distribution.png`  
@@ -936,78 +842,57 @@ Charts are automatically saved to `output/charts/`:
 - `bandwidth_requirements.png`  
 - `confusion_matrix.png`  
 
-#### Chart Interpretation  
+ Chart Interpretation  
 
-**Traffic Distribution Bar Chart:**  
+Traffic Distribution Bar Chart:  
 ```
-High Priority (Blue): Real-time apps (Waze, Messenger)  
-Medium Priority (Orange): Interactive apps (YouTube, Facebook)  
-Low Priority (Beige): Background apps (Dropbox, Trello)  
+High Priority (Blue): Real-time apps (Waze)  
+Medium Priority (Orange): Interactive apps (YouTube)  
+Low Priority (Peach): Background apps (Dropbox)  
 ```
 
-**Priority Pie Chart:**
+Priority Pie Chart:
 Shows percentage of traffic in each priority category.  
 - Large "High" slice: Many real-time apps  
 - Large "Medium" slice: Typical mobile usage  
 - Small "Low" slice: Less background traffic  
 
-**Confusion Matrix:**
+Confusion Matrix:
 - Dark red: Many flows (correct classifications)  
 - Light colors: Few flows  
-- Off-diagonal dark spots: Confusion between apps  
-  - Example: YouTube ↔ Spotify (both streaming)  
+- Off-diagonal dark spots: Confusion between apps in blue
+  - Example: YouTube <--> Spotify (both streaming)  
 
-### 6.4 Stopping the Process
+ 6.4 Stopping the Process
 
-If you need to stop execution:
-
-**Windows:**
-```
-Press Ctrl + C
-
-# System will display:
-KeyboardInterrupt
-^C
-# May need to close matplotlib windows manually
-```
-
-**macOS/Linux:**
-```
-Press Ctrl + C
-
-# Or from another terminal:
-ps aux | grep python
-kill <process_id>
-```
+If you stop execution:
 
 **What Happens:**  
 - Partial results may be lost  
 - Generated files (if any) remain  
 - Next run starts fresh  
 - No data corruption  
+ 
+6.5 Common First-Run Issues  
 
-### 6.5 Common First-Run Issues  
-
-#### Issue 1: No Data Found  
+ Issue 1: No Data Found  
 ```
 ValueError: No JSON files found in data folder  
 ```
 
-**Solution:** 
-```bash
-# Check data directory
-ls data/
+Solution:
+ Check data directory
 
-# If empty, add JSON files
+If empty, add JSON files
 cp /path/to/MIRAGE/files/*.json data/
 ```
-
-#### Issue 2: Memory Error
+ 
+Issue 2: Memory Error
 ```
 MemoryError: Unable to allocate array
 ```
 
-**Solution:**
+**Solution: Sample the dataset**
 ```python
 # In network_traffic_classification.py, add after line 260:
 if len(data) > 50000:
@@ -1015,21 +900,21 @@ if len(data) > 50000:
     print(f"Sampled dataset to 50000 flows")
 ```
 
-#### Issue 3: Matplotlib Not Showing
+ Issue 3: Matplotlib Not Showing
 ```
-# Charts generated but not displayed
+ Charts generated but not displayed
 ```
 
 **Solution:**
 ```python
-# Add at top of script, after imports:
+ Add at top of script, after imports:
 import matplotlib
 matplotlib.use('TkAgg')  # Or 'Qt5Agg'
 ```
 
-#### Issue 4: Slow Performance
+ Issue 4: Slow Performance
 ```
-# Training takes >10 minutes
+ Training takes >10 minutes
 ```
 
 **Solution:**
@@ -1044,26 +929,31 @@ rf_model = RandomForestClassifier(
 
 ---
 
-## 7. Configuration Options
+ 7. Configuration Options
 
-### 7.1 Basic Configuration
+ 7.1 Basic Configuration
 
 Edit these variables at the top of `network_traffic_classification.py`:
 
 ```python
 
-# CONFIGURATION SETTINGS
+# CONFIGURATION/toggle SETTINGS
 
 # Directory Settings
-data_folder = "data"                      # Input JSON files
-output_folder = "output"                  # Output files
-charts_folder = "charts"                  # Saved charts
+data_folder = "data" #dataset json files
+
+output_folder = "output" #folder to saved model, scaler, lda and Mirage.csv
+os.makedirs(output_folder, exist_ok=True)
+
+charts_folder = "charts" #folder to save bar charts and pie charts
+os.makedirs(charts_folder, exist_ok=True) 
 
 # File Names
-processed_data = "Mirage_flows.csv"       # Processed dataset
-Model = "model.pkl"                       # Trained model
-scaler_file = "feature_scaler.pkl"        # Feature scaler
-lda_file = "lda_transformer.pkl"          # LDA transformer
+#gets saved to output folder
+processed_data = os.path.join(output_folder, "Mirage_flows.csv")         # Processed dataset
+Model = os.path.join(output_folder, "model.pkl")                           # Trained model
+scaler_file = os.path.join(output_folder, "feature_scaler.pkl")"        # Feature scaler
+lda_file = os.path.join(output_folder, "lda_transformer.pkl")   #saves if Lda is true           # LDA transformer
 
 # Machine Learning Toggles
 use_SMOTE = False                         # SMOTE oversampling
@@ -1074,132 +964,132 @@ use_lda = False                           # Dimensionality reduction
 top_features = 10                         # Number of features to show
 ```
 
-### 7.2 Oversampling Strategies
+ 7.2 Oversampling Strategies
 
-#### Random Oversampling (Default)
+Random Oversampling (Default displayed best results)
 
-**When to Use:**  
+When to Use:  
 - General purpose (works for most cases)  
 - Fast and simple  
 - Good with small datasets  
 
-**Configuration:**  
+Configuration:  
 ```python
 use_SMOTE = False
 use_random_oversampling = True
 ```
 
-**How It Works:**
+How It Works:
 Randomly duplicates minority class samples until balanced.  
 
-**Pros:**  
+Pros:  
 - Simple and fast  
 - No synthetic data generation  
 - Preserves original data distribution  
 
-**Cons:**  
+Cons:  
 - May cause overfitting  
 - No new information added  
 
-#### SMOTE (Alternative)
+SMOTE (Alternative)
 
-**When to Use:**
+When to Use:
 - Need synthetic samples  
 - Have sufficient data (>1000 samples/class)  
 - Want to reduce overfitting  
 
-**Configuration:**
+Configuration:
 ```python
 use_SMOTE = True
 use_random_oversampling = False
 ```
 
-**How It Works:**
+How It Works:
 Creates synthetic samples by interpolating between existing minority class samples.
 
-**Pros:**
+Pros:
 - Generates new, realistic samples  
 - Better generalization  
 - Reduces overfitting risk  
 
-**Cons:**  
+Cons:  
 - Slower than random oversampling  
 - May create unrealistic samples in high dimensions  
 - Requires more memory  
 
-#### No Oversampling
+ No Oversampling
 
-**When to Use:**
+When to Use:
 - Dataset is already balanced  
 - Testing baseline performance  
 - Limited computational resources  
 
-**Configuration:**
+Configuration:
 ```python
 use_SMOTE = False
 use_random_oversampling = False
 ```
 
-**Impact:**
+Impact:
 - Faster training  
 - May have lower accuracy for minority classes  
 - Good for understanding raw dataset performance  
 
-### 7.3 Dimensionality Reduction (LDA)  
+ 7.3 Dimensionality Reduction (LDA)  
 
-#### Enabling LDA  
+ Enabling LDA  
 
-**When to Use:**  
+When to Use:  
 - Dataset has many features (>100)  
 - Training is slow  
 - Want to reduce overfitting  
 - Need faster predictions  
 
-**Configuration:**
+Configuration:
 ```python
 use_lda = True
 ```
 
-**How It Works:**  
+How It Works:  
 Linear Discriminant Analysis projects features onto a lower-dimensional space while maximizing class separability.  
 
-**Example:**
+Example:
 - Input: 102 features
 - Output: 19 LDA components (for 20 classes)
 - Reduction: ~80% fewer features
 
-**Benefits:**  
+Benefits:  
 - Faster training (50-70% speed increase)  
 - Reduced memory usage  
 - May improve generalization  
 - Removes redundant features  
 
-**Drawbacks:**  
+Drawbacks:  
 - May lose some information  
 - Cannot extract original feature importance  
 - Maximum components = (number of classes - 1)  
 
-#### Disabling LDA (Default)  
+ Disabling LDA (Default)  
 
-**Configuration:**  
+Configuration:  
 ```python  
 use_lda = False
 ```
 
-**Benefits:**  
+Benefits: 
 - Preserves all original features  
 - Can analyze feature importance  
 - No information loss  
 - Better interpretability  
 
-**Drawbacks:**
+Drawbacks:
 - Slower training  
 - More memory usage  
 - May overfit on redundant features  
 
-### 7.4 Random Forest Parameters
+ 7.4 Random Forest Parameters
 
-#### Basic Parameters
+ Basic Parameters
 
 Located in the `train_model()` function:
 
@@ -1215,9 +1105,9 @@ rf_model = RandomForestClassifier(
 )
 ```
 
-#### Parameter Tuning Guide
+ Parameter Tuning Guide
 
-**n_estimators (Number of Trees):**
+n_estimators (Number of Trees):
 ```python
 # Accuracy vs Speed tradeoff
 n_estimators=100      # Fast, may underfit
@@ -1225,12 +1115,12 @@ n_estimators=300      # Balanced (default)
 n_estimators=500      # Slower, marginal gains
 ```
 
-**Effect on Performance:**
+Effect on Performance:
 - More trees → Higher accuracy (plateaus after ~300)
 - More trees → Longer training time
 - More trees → Larger model file
 
-**max_depth (Tree Depth):**
+max_depth (Tree Depth):
 ```python
 # Overfitting vs Underfitting
 max_depth=10          # Simple trees, may underfit
@@ -1238,12 +1128,12 @@ max_depth=25          # Balanced (default)
 max_depth=None        # Unlimited, may overfit
 ```
 
-**Guidelines:**
+Guidelines:
 - Shallow trees (10-15): Better generalization, faster  
 - Deep trees (25-30): Better training accuracy  
 - Unlimited depth: Risk of overfitting  
 
-**min_samples_split:**
+min_samples_split:
 ```python
 # Minimum samples required to split a node
 min_samples_split=2   # More splits, complex trees
@@ -1251,7 +1141,7 @@ min_samples_split=5   # Balanced (defaul t)
 min_samples_split=10  # Fewer splits, simpler trees
 ```
 
-**min_samples_leaf:**
+min_samples_leaf:
 ```python
 # Minimum samples at each leaf node
 min_samples_leaf=1    # More detailed trees
@@ -1259,14 +1149,14 @@ min_samples_leaf=2    # Balanced (default)
 min_samples_leaf=5    # Simpler trees
 ```
 
-**n_jobs (Parallel Processing):**
+n_jobs (Parallel Processing):
 ```python
 n_jobs=1              # Single core (slow)
 n_jobs=4              # Use 4 cores
 n_jobs=-1             # Use all available cores (default)
 ```
 
-#### Recommended Configurations
+ Recommended Configurations
 
 **For High Accuracy:**
 ```python
@@ -1284,7 +1174,7 @@ rf_model = RandomForestClassifier(
 - Training time: 2-3x longer
 - Model size: 2x larger
 
-**For Fast Training:**
+For Fast Training:
 ```python
 rf_model = RandomForestClassifier(
     n_estimators=100,
@@ -1313,9 +1203,9 @@ rf_model = RandomForestClassifier(
 )
 ```
 
-### 7.5 Train-Test Split
+ 7.5 Train-Test Split
 
-#### Adjusting Split Ratio
+ Adjusting Split Ratio
 
 Located in `train_model()` function:
 
@@ -1328,33 +1218,33 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 ```
 
-**Options:**
+Options:
 ```python
 test_size=0.1    # 90% train, 10% test - More training data  
-test_size=0.2    # 80% train, 20% test - Balanced (default)  
+test_size=0.2    # 80% train, 20% test - Balanced (default) -- common in research papers
 test_size=0.3    # 70% train, 30% test - More evaluation data  
 ```
 
-**Guidelines:**
-- **Large datasets (>50K flows):** Use 0.2 or 0.3  
-- **Small datasets (<10K flows):** Use 0.1 or 0.15  
-- **Very small datasets (<5K flows):** Consider cross-validation  
+Guidelines:
+- Large datasets (>50K flows): Use 0.2 or 0.3  
+- Small datasets (<10K flows): Use 0.1 or 0.15  
+- Very small datasets (<5K flows): Consider cross-validation  
 
-#### Reproducibility
+ Reproducibility
 
 ```python
 random_state=42    # Fixed seed - Same results every run  
 random_state=None  # Random seed - Different results each run  
 ```
 
-**When to change:**    
+When to change:    
 - Testing model stability: Use `None` and run multiple times  
 - Production deployment: Use fixed seed (e.g., 42)  
 - Comparing configurations: Use same seed  
 
-### 7.6 QoS Policy Customization  
+ 7.6 QoS Policy Customization  
 
-#### Adding New Applications  
+ Adding New Applications  
 
 ```python
 qos_policies = {
@@ -1373,53 +1263,53 @@ qos_policies = {
 }
 ```
 
-#### QoS Policy Guidelines
+ QoS Policy Guidelines
 
-**Priority Levels:**  
-- **High:** Real-time applications (gaming, navigation, VoIP)  
+Priority Levels:  
+- High: Real-time applications (gaming, navigation, VoIP)  
   - Examples: Waze, Slither.io, Viber  
-- **Medium:** Interactive applications (streaming, social media)  
+- Medium: Interactive applications (streaming, social media)  
   - Examples: YouTube, Facebook, Spotify  
-- **Low:** Background applications (cloud storage, productivity)  
+- Low: Background applications (cloud storage, productivity)  
   - Examples: Dropbox, Trello, Duolingo  
 
-**Bandwidth Requirements:**  
-- **High:** Video streaming, video calls  
+Bandwidth Requirements:  
+- High: Video streaming, video calls  
   - Examples: YouTube (5-20 Mbps)  
-- **Medium:** Music streaming, image-heavy apps  
+- Medium: Music streaming, image-heavy apps  
   - Examples: Spotify (160-320 kbps), Instagram  
-- **Low:** Text-based apps, lightweight apps  
+- Low: Text-based apps, lightweight apps  
   - Examples: Twitter, Weather apps  
-- **Variable:** File sync, downloads  
+- Variable: File sync, downloads  
   - Examples: Dropbox, cloud backup  
 
-**Latency Sensitivity:**
-- **Very High:** Online gaming, real-time control  
+Latency Sensitivity:
+- Very High: Online gaming, real-time control  
   - Target: <20ms  
   - Examples: Slither.io, multiplayer games  
-- **High:** Navigation, VoIP, video calls  
+- High: Navigation, VoIP, video calls  
   - Target: 20-50ms  
   - Examples: Waze, Messenger calls  
-- **Medium:** Social media, web browsing, streaming  
+- Medium: Social media, web browsing, streaming  
   - Target: 50-150ms  
   - Examples: Facebook, YouTube  
-- **Low:** File transfers, email, cloud storage  
+- Low: File transfers, email, cloud storage  
   - Target: >150ms acceptable  
   - Examples: Dropbox, email clients  
 
-**Jitter Tolerance:**  
-- **Very Low:** Real-time gaming  
+Jitter Tolerance:  
+- Very Low: Real-time gaming  
   - Max jitter: <10ms  
-- **Low:** VoIP, video calls  
+- Low: VoIP, video calls  
   - Max jitter: 10-30ms  
-- **Medium:** Video streaming  
+- Medium: Video streaming  
   - Max jitter: 30-50ms (buffering helps)  
-- **High:** Downloads, messaging  
+- High: Downloads, messaging  
   - Max jitter: >50ms acceptable  
 
-#### Example QoS Policies by Category  
+Example QoS Policies by Category  
 
-**Navigation Apps:** 
+Navigation Apps: 
 ```python
 'waze': {
     'priority': 'high',
@@ -1429,7 +1319,7 @@ qos_policies = {
 }
 ```
 
-**Gaming Apps:**
+Gaming Apps:
 ```python
 'slither': {
     'priority': 'high',
@@ -1439,7 +1329,7 @@ qos_policies = {
 }
 ```
 
-**Video Streaming:**
+Video Streaming:
 ```python
 'youtube': {
     'priority': 'medium',
@@ -1449,7 +1339,7 @@ qos_policies = {
 }
 ```
 
-**Music Streaming:**
+Music Streaming:
 ```python
 'spotify': {
     'priority': 'high',
@@ -1459,7 +1349,7 @@ qos_policies = {
 }
 ```
 
-**Social Media:**
+Social Media:
 ```python
 'facebook': {
     'priority': 'medium',
@@ -1469,7 +1359,7 @@ qos_policies = {
 }
 ```
 
-**Cloud Storage:**
+Cloud Storage:
 ```python
 'dropbox': {
     'priority': 'low',
@@ -1479,28 +1369,28 @@ qos_policies = {
 }
 ```
 
-### 7.7 Display Settings  
+ 7.7 Display Settings  
 
-#### Top Features Count   
+ Top Features Count   
 
 ```python
 top_features = 10    # Show top 10 most important features
 ```
 
-**Options:**
+Options:
 - `top_features = 5`: Quick overview  
 - `top_features = 10`: Balanced (default)  
 - `top_features = 20`: Detailed analysis  
 - `top_features = 50`: Comprehensive view  
 
-**Note:** Only applicable when `use_lda = False`
+Note: Only applicable when `use_lda = False`
 
-#### Chart Settings
+ Chart Settings
 
 Modify in the visualization functions:
 
 ```python
-# Figure size
+ # Figure size
 plt.figure(figsize=(16, 8))      # Width x Height in inches
 
 # Color schemes
@@ -1516,55 +1406,55 @@ plt.savefig(path, dpi=200)       # Higher = better quality, larger file
 
 ---
 
-## 8. Understanding the Results
+8. Understanding the Results
 
-### 8.1 Performance Metrics Explained
+ 8.1 Performance Metrics Explained
 
-#### Overall Accuracy
+ Overall Accuracy
 
 ```
 Accuracy: 0.8976 (89.76%)
 ```
 
-**What it means:**  
+What it means:  
 - 89.76% of flows were correctly classified  
 - This is excellent performance for 20-class classification  
 
-**Interpretation:**  
-- **>90%:** Excellent - Ready for production  
-- **85-90%:** Good - Minor tuning may help  
-- **80-85%:** Acceptable - Consider improvements  
-- **<80%:** Needs improvement - Check data quality  
+Interpretation:  
+- >90%: Excellent - Ready for production  
+- 85-90%: Good - Minor tuning may help  
+- 80-85%: Acceptable - Consider improvements  
+- <80%: Needs improvement - Check data quality  
 
-#### F1-Scores
+F1-Scores
 
 ```
 Macro F1-Score: 0.8971  
 Weighted F1-Score: 0.8971  
 ```
 
-**Macro F1-Score:**  
+Macro F1-Score: 
 - Average F1 across all classes (unweighted)  
 - Treats all applications equally  
 - Good for understanding overall model quality  
 
-**Weighted F1-Score:**  
+Weighted F1-Score:  
 - Average F1 weighted by class size  
 - Emphasizes performance on larger classes  
 - Better reflects real-world usage  
 
-**When scores differ significantly:**
+When scores differ significantly:
 ```
 Macro F1: 0.75    }   
 Weighted F1: 0.88 } Large difference  
 
-# Indicates:
-# - Good performance on common apps (YouTube, Facebook)  
-# - Poor performance on rare apps (Comics, Trello)  
-# - Model biased toward majority classes  
+ Indicates:
+ - Good performance on common apps (YouTube, Facebook)  
+ - Poor performance on rare apps (Comics, Trello)  
+ - Model biased toward majority classes  
 ```
 
-#### Per-Class Metrics
+ Per-Class Metrics
 
 The classification report shows detailed metrics for each application:
 
@@ -1579,22 +1469,22 @@ facebook         0.8186  0.8403    0.8293   2373.0000
 ...
 ```
 
-**Columns explained:**  
-- **precision:** Of predicted "YouTube" flows, what % were actually YouTube?  
+Columns explained:  
+- precision: Of predicted "facebook" flows, what % were actually YouTube?  
   - `precision = True Positives / (True Positives + False Positives)`  
   - High precision = Few false alarms  
 
-- **recall:** Of actual YouTube flows, what % did we catch?  
+- recall: Of actual facebook flows, what % did we catch?  
   - `recall = True Positives / (True Positives + False Negatives)`  
   - High recall = Few missed detections  
 
-- **f1-score:** Harmonic mean of precision and recall  
+- f1-score: Harmonic mean of precision and recall  
   - `f1 = 2 × (precision × recall) / (precision + recall)`  
   - Balanced measure of performance  
 
-- **support:** Number of actual flows in test set
+- support: Number of actual flows in test set
 
-**Example interpretation:**
+Example interpretation:
 ```
 youtube: precision=0.92, recall=0.94, f1=0.93
 
@@ -1604,7 +1494,7 @@ Meaning:
 - Overall YouTube classification: Excellent (F1=0.93)  
 ```
 
-### 8.2 QoS Priority Analysis
+ 8.2 QoS Priority Analysis
 
 ```
 Performance by QoS Priority Level:  
@@ -1613,59 +1503,59 @@ Medium Priority Apps: F1=0.8444 (n=11 apps)
 Low Priority Apps: F1=0.8647 (n=4 apps)
 ```
 
-**What it means:**
-- **High priority apps** (Waze, Messenger, Viber, Slither, Spotify) are classified most accurately
+What it means:
+- High priority apps (Waze, Messenger, Viber, Slither, Spotify) are classified most accurately
 - This is ideal because these apps need the most reliable QoS
 - Medium and low priority apps also have good performance
 
-**Why high priority performs best:**
+Why high priority performs best:
 1. Often have distinct traffic patterns
 2. Real-time nature creates unique signatures
 3. Tend to be more consistently used
 4. System correctly prioritizes what matters most
 
-### 8.3 Confusion Matrix Analysis
+ 8.3 Confusion Matrix Analysis
 
-#### Reading the Matrix
+ Reading the Matrix
 
 ```
 view Confusion Matrix.png
 ```
 
-**Diagonal values (bold):** Correct classifications  in red along the diagonal
+Diagonal values (bold): Correct classifications  in red along the diagonal
 
-**Off-diagonal values:** Misclassifications  in blue
+Off-diagonal values: Misclassifications  in blue
 
-#### Common Confusion Patterns  
+ Common Confusion Patterns  
 
-**Streaming Apps Confusion:**  
+Streaming Apps Confusion:  
 ```
-YouTube ↔ Spotify: Similar streaming patterns  
+YouTube <=> Spotify: Similar streaming patterns  
 Solution: Both are medium priority, acceptable confusion  
 ```
 
-**Social Media Confusion:**
+Social Media Confusion:
 ```
-Facebook ↔ Twitter ↔ Pinterest: Similar content types  
+Facebook <=> Twitter <=> Pinterest: Similar content types  
 Solution: Same QoS requirements, minimal impact  
 ```
 
-**Messaging Confusion:**
+Messaging Confusion:
 ```
 Messenger ↔ Viber: Both VoIP/messaging apps  
 Solution: Both high priority, QoS not affected  
 ```
 
-**Critical Confusions (Rare but important):**  
+Critical Confusions (Rare but important):  
 ```
-Dropbox (low priority) ↔ Waze (high priority)  
+Dropbox (low priority) <=> Waze (high priority)  
 Impact: HIGH - Would give wrong QoS  
 Frequency: Should be <1% with good model  
 ```
 
-### 8.4 QoS Distribution Analysis  
+8.4 QoS Distribution Analysis  
 
-#### Priority Distribution  
+ Priority Distribution  
 
 ```
 Priority Distribution:
@@ -1674,26 +1564,26 @@ medium:  71205 flows ( 58.4%)
 low   :  21830 flows ( 17.9%) 
 ```
 
-**Interpretation:**
-- **23.7% high priority:** Real-time, latency-sensitive apps
+Interpretation:
+- 23.7% high priority: Real-time, latency-sensitive apps
   - Requires: Priority queuing, low latency
   - Examples: Waze, Messenger, gaming
 
-- **58.4% medium priority:** Interactive apps (majority)
+- 58.4% medium priority: Interactive apps (majority)
   - Requires: Balanced resource allocation
   - Examples: YouTube, Facebook, Spotify
 
-- **17.9% low priority:** Background tasks
+- 17.9% low priority: Background tasks
   - Requires: Bandwidth throttling acceptable
   - Examples: Dropbox, email sync
 
-**Network Planning Insights:**
+Network Planning Insights:
 - Reserve 20-25% bandwidth for high priority
 - Allocate 70% bandwidth for medium priority
 - Use remaining bandwidth for low priority
 - Implement priority queuing for high traffic
 
-#### Latency Sensitivity Distribution
+ Latency Sensitivity Distribution
 
 ```
 
@@ -1704,24 +1594,24 @@ medium    :  73567 flows ( 60.3%)
 low       :  26083 flows ( 21.4%)	
 ```
 
-**Network Recommendations:**
-- **Very High (2.6%):** Target <20ms latency  
+Network Recommendations:
+- Very High (2.6%):Target <20ms latency  
   - Gaming, real-time control  
   - Use: Express forwarding, dedicated queues  
 
-- **High (15.7%):** Target <50ms latency  
+- High (15.7%): Target <50ms latency  
   - Navigation, VoIP
   - Use: Priority queuing, jitter buffering
 
-- **Medium (60.3%):** Target <150ms latency
+- Medium (60.3%): Target <150ms latency
   - Streaming, social media
   - Use: Standard best-effort with QoS
 
-- **Low (21.4%):** >150ms acceptable
+- Low (21.4%): >150ms acceptable
   - File transfers, background sync
   - Use: Throttling acceptable
 
-#### Bandwidth Distribution
+ Bandwidth Distribution
 
 ```
 Bandwidth Distribution:
@@ -1731,24 +1621,24 @@ low       :  32327 flows ( 26.5%)
 variable  :   5205 flows (  4.3%)
 ```
 
-**Capacity Planning:**
-- **High bandwidth (5.3%):** Video streaming  
+Capacity Planning:
+- High bandwidth (5.3%): Video streaming  
   - Reserve: 60-70% of total capacity  
   - Peak rates: 5-20 Mbps per flow  
 
-- **Medium bandwidth (63.9%):** Music, images  
+- Medium bandwidth (63.9%): Music, images  
   - Reserve: 20-30% of total capacity  
   - Peak rates: 0.5-5 Mbps per flow  
 
-- **Low bandwidth (26.5%):** Text, lightweight  
+- Low bandwidth (26.5%): Text, lightweight  
   - Reserve: 5-10% of total capacity  
   - Peak rates: <500 kbps per flow  
 
-- **Variable (4.3%):** Burst traffic  
+- Variable (4.3%): Burst traffic  
   - Reserve: Flexible allocation  
   - Use: Traffic shaping  
 
-### 8.5 Feature Importance Analysis
+ 8.5 Feature Importance Analysis
 
 When `use_lda = False`, you'll see:
 
@@ -1766,25 +1656,25 @@ packet_count_backward_std
 flow_duration_forward_std  
 ```
 
-**Understanding Feature Names:**  
+Understanding Feature Names:  
 - `packet_length_forward_mean`: Average size of uploaded packets  
 - `inter_arrival_time_backward_std`: Variability in download timing  
 - `flow_duration_forward_max`: Maximum connection duration  
 
-**What this tells you:**  
-1. **Packet length statistics:** Most discriminative features  
+What this tells you:
+1. Packet length statistics: Most discriminative features  
    - Different apps send different-sized packets  
    - Example: YouTube (large) vs Twitter (small)  
 
-2. **Timing patterns:** Important for classification  
+2. Timing patterns: Important for classification  
    - Gaming: Very regular timing  
    - Browsing: Bursty, irregular timing  
 
-3. **Flow duration:** Helps distinguish app types  
+3. Flow duration: Helps distinguish app types  
    - Streaming: Long durations  
    - Messaging: Short bursts  
 
-### 8.6 QoS Recommendations Output  
+ 8.6 QoS Recommendations Output  
 
 For each application, you'll see:
 
@@ -1799,36 +1689,36 @@ youtube:
 
 
 
-### 8.7 Interpreting Training Time   
+ 8.7 Interpreting Training Time   
 
 ```
 Total training time: 2.00 minutes and 15.43 seconds  
 ```
 
-**Factors affecting training time:**  
-1. **Dataset size:** More flows = longer training  
-2. **Feature count:** More features = longer training  
-3. **Oversampling:** SMOTE slower than Random Oversampling  
-4. **LDA:** Can reduce training time if many features  
-5. **Random Forest settings:** More trees = longer training  
-6. **CPU cores:** More cores = faster with n_jobs=-1  
+Factors affecting training time:  
+1. Dataset size: More flows = longer training  
+2. Feature count: More features = longer training  
+3. Oversampling: SMOTE slower than Random Oversampling  
+4. LDA: Can reduce training time if many features  
+5. Random Forest settings: More trees = longer training  
+6. CPU cores: More cores = faster with n_jobs=-1  
 
-**Typical training times:**  
+Typical training times:  
 - Small dataset (<10K flows): 30-60 seconds  
 - Medium dataset (10K-50K flows): 1-3 minutes  
 - Large dataset (50K-100K flows): 3-10 minutes  
 - Very large (>100K flows): 10-30 minutes  
 
-**When to be concerned:**  
+When to be concerned:
 - Training >30 minutes with <100K flows  
 - Possible causes: Insufficient RAM, CPU bottleneck, too many features  
 - Solutions: Enable LDA, reduce n_estimators, sample dataset  
 
 ---
 
-## 9. Using the Trained Model  
+ 9. Using the Trained Model  
 
-### 9.1 Model Files Overview  
+ 9.1 Model Files Overview  
 
 After training, you'll have these files in `output/`:  
 
