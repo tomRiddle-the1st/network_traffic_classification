@@ -202,8 +202,7 @@ git clone https://github.com/tomRiddle-the1st/network_traffic_classification.git
 
 **Option B: Using Terminal (Faster)**
 1. Open **View → Terminal** (or press `Ctrl + ~`)
-2. Ensure your virtual environment is activated (VS does this automatically)
-3. Create `requirements
+2. Add `requirements
 ```requirements
 pandas>=1.3.0
 numpy>=1.21.0
@@ -256,19 +255,7 @@ git clone https://github.com/tomRiddle-the1st/network_traffic_classification.git
 cd network_traffic_classification
 ```
 
-#### Step 2: Create Virtual Environment
-```bash
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
-```
-
-#### Step 3: Check requirements
+#### Step 2: Check requirements
 ```requirements
 pandas>=1.3.0
 numpy>=1.21.0
@@ -280,7 +267,7 @@ joblib>=1.1.0
 scipy>=1.7.0
 ```
 
-#### Step 4: Install Dependencies
+#### Step 3: Install Dependencies
 ```bash
 # Install all requirements
 pip install -r requirements #check above
@@ -289,7 +276,7 @@ pip install -r requirements #check above
 python -c "import pandas, numpy, sklearn, matplotlib, seaborn, imblearn; print('All dependencies installed successfully!')"
 ```
 
-#### Step 5: Verify Installation
+#### Step 4: Verify Installation
 ```bash
 python --version  # Should show Python 3.8+
 pip list | grep scikit-learn  # Verify scikit-learn installation
@@ -322,7 +309,6 @@ The script automatically creates `output/` and `charts/` folders, but you need t
 project-root/
 ├── network_traffic_classification.py  # Main script
 ├── README.md                          # This file
-├── requirements                      # Dependencies list
 └── data/                              # CREATE THIS MANUALLY
     ├── com.waze_*.json
     ├── com.google.android.youtube_*.json
@@ -408,16 +394,6 @@ Ensure your JSON files follow the MIRAGE-2019 format:
 2. Press **F5** or click the ** Start** button
 3. View output in the integrated terminal
 
-**Using Command Line:**
-```bash
-# Activate your virtual environment first
-source venv/bin/activate  # On macOS/Linux
-# or
-venv\Scripts\activate  # On Windows
-
-# Run the classification system
-python network_traffic_classification.py
-```
 
 ### 5. Expected Output
 
@@ -641,22 +617,29 @@ qos_policies = {
 
 ### Basic Configuration
 
-Edit configuration variables at the top of `network_traffic_classification.py`:
+Edit configuration and toggle variables at the top of `network_traffic_classification.py`:
 
 ```python
 # CONFIGURATION SETTINGS
 # File paths
 data_folder = "data"                     # Input data directory
-output_folder = "output"                 # Output directory
-charts_folder = "charts"                 # Charts directory
-processed_data = "Mirage_flows.csv"      # Cached processed dataset
-Model = "model.pkl"                      # Output model file
-scaler_file = "feature_scaler.pkl"       # Feature scaler file
+output_folder = "output" #folder to saved model, scaler, lda and Mirage
+os.makedirs(output_folder, exist_ok=True)                 # Output directory
+
+charts_folder = "charts" #folder to save bar charts and pie charts
+os.makedirs(charts_folder, exist_ok=True)                 # Charts directory
+
+#gets saved to output folder
+processed_data = os.path.join(output_folder, "Mirage_flows.csv")  
+Model = os.path.join(output_folder, "model.pkl")                 
+scaler_file = os.path.join(output_folder, "feature_scaler.pkl")   
+lda_file = os.path.join(output_folder, "lda_transformer.pkl")   #saves if Lda is true 
 
 # Machine Learning Techniques (Toggle on/off)
-use_SMOTE = False                        # Use SMOTE oversampling
-use_random_oversampling = True           # Use Random Oversampling (recommended)
-use_lda = False                          # Apply dimensionality reduction
+#toggle
+use_SMOTE = False
+use_random_oversampling = True 
+use_lda = False                    # Apply dimensionality reduction
 
 # Display Settings
 top_features = 10                        # Number of top features to display
@@ -1261,11 +1244,11 @@ network_traffic_classification/
 ├── RESEARCH_PAPER.md                  # Full research article (if available)
 │
 ├── data/                              # Input data directory (CREATE MANUALLY)
-│   ├── com.waze_nexus_*.json
-│   ├── com.waze_mi5_*.json
-│   ├── com.google.android.youtube_nexus_*.json
-│   ├── com.google.android.youtube_mi5_*.json
-│   ├── com.spotify.music_*.json
+│   ├── 1494419517_com.twitter.android_MIRAGE-2019_traffic_dataset_labeled_biflows.json
+│   ├── 1494434240_com.google.android.youtube_MIRAGE-2019_traffic_dataset_labeled_biflows.json
+│   ├── 1494508157_com.spotify.music_MIRAGE-2019_traffic_dataset_labeled_biflows.json
+│   ├── 1511195631_com.facebook.katana_MIRAGE-2019_traffic_dataset_labeled_biflows.json
+│   ├── 1494596297_air.com.hypah.io.slither_MIRAGE-2019_traffic_dataset_labeled_biflows.json
 │   └── ... (other application JSON files from both devices)
 │
 ├── output/                            # Generated outputs (AUTO-CREATED)
@@ -1352,7 +1335,7 @@ The MIRAGE-2019 dataset is provided by the University of Naples Federico II. Ple
 A: At least 500 flows per application for reasonable accuracy. The full MIRAGE-2019 dataset contains 120K+ flows across 20 apps.
 
 **Q: Can I use this for real-time traffic classification?**  
-A: The model is trained for batch classification. For real-time use, you'll need to implement a flow extraction pipeline and load the trained model for predictions.
+A: The model is trained for classification. For real-time use, you'll need to implement a flow extraction pipeline and load the trained model for predictions.
 
 **Q: Does this work with encrypted traffic?**  
 A: Yes! The system uses flow-level statistical features, not packet payloads, so it works with encrypted traffic (HTTPS, VPN, TLS).
