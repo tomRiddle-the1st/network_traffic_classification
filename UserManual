@@ -1,6 +1,5 @@
 # User Manual: Network Traffic Classification for QoS Improvement
 
-**Version:** 1.0  
 **Author:** Mohammed Aqeel Ismail  
 **Institution:** School of Mathematics,   
 Statistics and Computer Science,  
@@ -12,7 +11,7 @@ RSA
 
 ### 1.1 What is This System?
 
-This Network Traffic Classification System is a machine learning-based tool that automatically identifies mobile applications from their 
+This Network Traffic Classification System is a machine learning-based tool that  identifies mobile applications from their 
 network traffic patterns and recommends Quality of Service (QoS) policies for optimal network performance.
 
 **Key Benefits:**
@@ -51,6 +50,7 @@ By following this manual, you will:
 - Python 3.8 or higher installed  
 - 5GB+ free disk space  
 - Internet connection (for initial setup)  
+- IDE (Optional): Visual Studio Community 2022 or any Python IDE
 
 ---
 
@@ -61,61 +61,19 @@ By following this manual, you will:
 Before diving in, ensure you have:  
 
 - [ ] Python 3.8+ installed  
+- [ ] IDE (Optional): Visual Studio Community 2022 or any Python IDE
 - [ ] Dataset downloaded (MIRAGE-2019 or custom)  
 - [ ] All dependencies installed  
 - [ ] Project files downloaded  
 - [ ] 30-60 minutes for first-time setup  
 
-### 2.2 System Overview  
 
-```
-┌─────────────────┐
-│  Input: JSON    │
-│  Traffic Files  │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ Step 1: Data    │
-│ Aggregation     │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ Step 2: Feature │
-│ Preprocessing   │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ Step 3: Model   │
-│ Training (RF)   │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ Step 4: Model   │
-│ Evaluation      │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ Step 5: QoS     │
-│ Analysis        │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ Output: Model   │
-│ & Reports       │
-└─────────────────┘
-```
 
-### 2.3 What You'll Get  
+### 2.2 What You'll Get  
 
 After running the system, you will have:  
 
-1. **Trained Model** (`model.pkl`) - Ready for deployment  
+1. **Trained Model** (`model.pkl`) - Ready for deployment with lda.pkl and feature_scaler.pkl
 2. **Performance Metrics** - Accuracy, F1-scores, confusion matrix  
 3. **QoS Recommendations** - Priority levels for each application  
 4. **Visualizations** - bar charts and pie chart showing traffic distribution and performance  
@@ -237,9 +195,9 @@ With your virtual environment activated:
 
 ```bash
 # Install all required packages
-pip install -r requirements.txt
+pip install -r requirements
 
-# This will install:
+# must install the following requirements (can be done manually):
 # - pandas (data manipulation)  
 # - numpy (numerical computing)  
 # - scikit-learn (machine learning)  
@@ -375,19 +333,46 @@ The system operates in five main steps:
 
 #### Network Flows  
 A **flow** is a sequence of packets sharing:   
-- Source IP and port  
-- Destination IP and port  
+- Source IP and port   #part of flow id
+- Destination IP and port  #part of flow id
 - Transport protocol (TCP/UDP)  
 - Time window  
 
-**Example Flow Features:**  
+**Sample Flow Features:**  
 ```
-Flow ID: 192.168.1.100:12345 → 8.8.8.8:443  
-Duration: 45 seconds  
-Forward packets: 150  
-Backward packets: 120  
-Avg packet size: 512 bytes  
-Inter-arrival time: 0.3 seconds  
+json
+{
+  "192.168.20.101,51221,216.58.205.42,443,6": { #flow_id
+    "packet_data": {
+  "src_port": [ 51221, 443, 51221, ... ],
+  "dst_port": [ 443, 51221,...],
+  "packet_dir": [ 0, 1, 0,...],
+  "L4_payload_bytes": [ 1368, 0, 1368, ...],
+  "iat": [ 0, 0.05589914321899414, 0.2340989112854004,... ],
+  "TCP_win_size": [ 1544, 725, ... ],
+  "L4_raw_payload": [....}
+    "flow_features": {
+   "packet_length": {
+     "biflow": {
+       "min": 52.0,
+       "max": 1420.0,
+       "mean": 381.9183673469388,
+       "std": 469.20914081665745,
+       "var": 220157.2178259059,
+       "mad": 77.0,
+       "skew": 1.334384411480604,
+       "kurtosis": 0.3833087760022593,
+       "10_percentile": 52.0,
+       "20_percentile": 52.0,
+       "30_percentile": 52.0,
+       "40_percentile": 52.0,
+       "50_percentile": 129.0,
+       "60_percentile": 168.19999999999993,
+       "70_percentile": 500.3999999999984,
+       "80_percentile": 685.2000000000011,
+       "90_percentile": 1420.0
+     },....
+} 
 ```
 
 #### Feature Extraction
@@ -399,7 +384,7 @@ The system uses statistical features:
 - **Direction:** Upstream vs downstream traffic  
 
 #### QoS Policies  
-Each application gets four QoS parameters:  
+Each application gets four QoS parameters:   =#as well as classification confidence
 
 1. **Priority:** How urgently traffic should be handled  
    - High: Real-time apps (Waze, Messenger)  
@@ -494,21 +479,14 @@ F1-Score = 2 × (Precision × Recall) / (Precision + Recall)
 
 #### Confusion Matrix
 Shows actual vs predicted classifications:
-Script generates a Confusion matrix
-```
-              Predicted
-           YouTube  Waze  Spotify
-Actual
-YouTube      1450    30      20
-Waze           25  1380      15
-Spotify        35    20    1425
-```
+Script generates a Confusion matrix as a png file
+
 
 **Reading the Matrix:**
 - Diagonal: Correct classifications
 - Off-diagonal: Misclassifications
-- Row sums: Actual class counts
-- Column sums: Predicted class counts
+- y-axis: Actual class counts
+- x-axis: Predicted class counts
 
 ---
 
@@ -532,7 +510,7 @@ Spotify        35    20    1425
    # Create data directory in your project
    mkdir data
    
-   # Copy JSON files from MIRAGE-2019
+   # Copy JSON files from MIRAGE-2019 from Nexus and Mi5 into data
    cp /path/to/MIRAGE-2019/com.waze/*.json data/
    cp /path/to/MIRAGE-2019/com.spotify.music/*.json data/
    # ... repeat for other apps
@@ -541,8 +519,8 @@ Spotify        35    20    1425
 #### Supported Applications
 
 The system recognizes these MIRAGE-2019 applications:
-
-| Application | Package Name | QoS Priority |
+#package name is different to how it is actually named for simplicity it is added like this in the table below
+| Application | Package Name  | QoS Priority |
 |------------|--------------|--------------|
 | Waze | com.waze | High |
 | Spotify | com.spotify.music | High |
@@ -573,34 +551,37 @@ Each JSON file contains multiple network flows:
 
 ```json
 {
-  "flow_id_1": {
+  "192.168.20.101,51221,216.58.205.42,443,6": { #flow_id
+    "packet_data": {
+  "src_port": [ 51221, 443, 51221, ... ],
+  "dst_port": [ 443, 51221,...],
+  "packet_dir": [ 0, 1, 0,...],
+  "L4_payload_bytes": [ 1368, 0, 1368, ...],
+  "iat": [ 0, 0.05589914321899414, 0.2340989112854004,... ],
+  "TCP_win_size": [ 1544, 725, ... ],
+  "L4_raw_payload": [....}
     "flow_features": {
-      "packet_length": {
-        "forward": {
-          "mean": 512.3,
-          "std": 120.5,
-          "min": 60,
-          "max": 1500
-        },
-        "backward": {
-          "mean": 380.2,
-          "std": 95.3,
-          "min": 40,
-          "max": 1200
-        }
-      },
-      "inter_arrival_time": {
-        "forward": {
-          "mean": 0.025,
-          "std": 0.012
-        },
-        "backward": {
-          "mean": 0.030,
-          "std": 0.015
-        }
-      }
-    }
-  },
+   "packet_length": {
+     "biflow": {
+       "min": 52.0,
+       "max": 1420.0,
+       "mean": 381.9183673469388,
+       "std": 469.20914081665745,
+       "var": 220157.2178259059,
+       "mad": 77.0,
+       "skew": 1.334384411480604,
+       "kurtosis": 0.3833087760022593,
+       "10_percentile": 52.0,
+       "20_percentile": 52.0,
+       "30_percentile": 52.0,
+       "40_percentile": 52.0,
+       "50_percentile": 129.0,
+       "60_percentile": 168.19999999999993,
+       "70_percentile": 500.3999999999984,
+       "80_percentile": 685.2000000000011,
+       "90_percentile": 1420.0
+     },....
+}
   "flow_id_2": {
     ...
   }
@@ -658,14 +639,15 @@ To use your own traffic data:
 3. **Place files in data/ directory:**
    ```
    data/
-   ├── com.myapp1_flows.json
-   ├── com.myapp2_flows.json
-   └── com.myapp3_flows.json
+    ├── com.waze_*.json
+    ├── com.google.android.youtube_*.json
+    ├── com.spotify.music_*.json
+    └── ... (other application JSON files from BOTH devices)
    ```
 
 #### Updating Label Extraction
 
-If your filenames don't match the expected pattern, modify the `extract_label()` function:
+If your filenames don't match the expected pattern, modify the `extract_label()` function according to your dataset needs:
 
 ```python
 def extract_label(filename):
@@ -829,8 +811,8 @@ The system will print status updates:
 ```
 NETWORK TRAFFIC CLASSIFICATION
 
-Step 1: Aggregating flow data...  
-Processing waze with 1234 flows  
+Step 1: Aggregating flow data... #processes 1640 JSON files 
+Processing waze with 1234 flows  #numbers are not actual numbers
 Processing youtube with 5678 flows  
 Processing spotify with 3456 flows  
 ... (continues for all applications)  
@@ -943,7 +925,7 @@ Three pie charts appear:
 When charts appear:  
 - **Close Window:** Click X or press Q  
 - **Save Chart:** Right-click → Save to desired folder
-- **OR Charts get saved to charts folder  
+- **OR Charts get saved to charts folder via script
 - **Zoom:** Use toolbar buttons  
 - **Pan:** Hold and drag  
 
@@ -1069,9 +1051,8 @@ rf_model = RandomForestClassifier(
 Edit these variables at the top of `network_traffic_classification.py`:
 
 ```python
-#============================================
+
 # CONFIGURATION SETTINGS
-#============================================
 
 # Directory Settings
 data_folder = "data"                      # Input JSON files
@@ -1533,57 +1514,6 @@ plt.xlabel("X Label", fontsize=12)
 plt.savefig(path, dpi=200)       # Higher = better quality, larger file
 ```
 
-### 7.8 Configuration Examples
-
-#### Example 1: Quick Testing
-```python
-# Fast configuration for testing
-use_SMOTE = False
-use_random_oversampling = True
-use_lda = True                   # Speed up training
-top_features = 5
-
-rf_model = RandomForestClassifier(
-    n_estimators=100,            # Fewer trees
-    max_depth=15,                # Shallower trees
-    n_jobs=-1
-)
-```
-
-#### Example 2: Maximum Accuracy
-```python
-# Best accuracy configuration
-use_SMOTE = True                 # Better synthetic samples
-use_random_oversampling = False
-use_lda = False                  # Keep all features
-top_features = 20
-
-rf_model = RandomForestClassifier(
-    n_estimators=500,            # More trees
-    max_depth=30,                # Deeper trees
-    min_samples_split=2,
-    min_samples_leaf=1,
-    n_jobs=-1
-)
-```
-
-#### Example 3: Production Deployment
-```python
-# Balanced for deployment
-use_SMOTE = False
-use_random_oversampling = True   # Faster than SMOTE
-use_lda = True                   # Smaller model
-top_features = 10
-
-rf_model = RandomForestClassifier(
-    n_estimators=300,
-    max_depth=25,
-    class_weight="balanced",
-    random_state=42,             # Reproducible
-    n_jobs=-1
-)
-```
-
 ---
 
 ## 8. Understanding the Results
@@ -1598,7 +1528,6 @@ Accuracy: 0.8976 (89.76%)
 
 **What it means:**  
 - 89.76% of flows were correctly classified  
-- Out of 24,391 test flows, 21,897 were correct  
 - This is excellent performance for 20-class classification  
 
 **Interpretation:**  
@@ -1700,22 +1629,12 @@ Low Priority Apps: F1=0.8647 (n=4 apps)
 #### Reading the Matrix
 
 ```
-Confusion Matrix:
-              Predicted
-           YouTube  Facebook  Spotify  Waze
-Actual
-YouTube       1410        45       30    15
-Facebook        52      1044       80    24
-Spotify         28        65      990    17
-Waze            15        30       20   915
+view Confusion Matrix.png
 ```
 
-**Diagonal values (bold):** Correct classifications  
-- YouTube: 1410/1500 = 94% correct  
+**Diagonal values (bold):** Correct classifications  in red along the diagonal
 
-**Off-diagonal values:** Misclassifications  
-- YouTube→Facebook: 45 flows misclassified  
-- Facebook→Spotify: 80 flows confused  
+**Off-diagonal values:** Misclassifications  in blue
 
 #### Common Confusion Patterns  
 
@@ -1878,40 +1797,7 @@ youtube:
   Jitter Tolerance: medium  
 ```
 
-**Using These Recommendations:**  
 
-1. **Network Configuration:**  
-   ```
-   # Router/Firewall rules
-   IF application == "youtube" THEN  
-       SET priority_queue = "medium"  
-       SET bandwidth_min = "5 Mbps"  
-       SET bandwidth_max = "20 Mbps"  
-       SET latency_target = "100 ms"  
-       SET jitter_buffer = "50 ms"  
-   ```
-
-2. **SDN Controller:**
-   ```python  
-   qos_policy = {  
-       'app': 'youtube',  
-       'priority': 2,  # 1=high, 2=medium, 3=low  
-       'min_bw': 5000000,  # 5 Mbps in bps  
-       'max_bw': 20000000,  
-       'dscp': 'AF31'  # DiffServ code point   
-   }
-   controller.apply_policy(flow_id, qos_policy)  
-   ```
-
-3. **Traffic Shaping:**  
-   ```bash  
-   # Linux TC (Traffic Control)  
-   tc qdisc add dev eth0 root handle 1: htb default 30  
-   tc class add dev eth0 parent 1: classid 1:1 htb rate 100mbit  
-   tc class add dev eth0 parent 1:1 classid 1:10 htb rate 20mbit prio 1  # High  
-   tc class add dev eth0 parent 1:1 classid 1:20 htb rate 60mbit prio 2  # Medium  
-   tc class add dev eth0 parent 1:1 classid 1:30 htb rate 20mbit prio 3  # Low  
-   ```
 
 ### 8.7 Interpreting Training Time   
 
