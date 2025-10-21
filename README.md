@@ -37,6 +37,7 @@ The downloaded dataset contains zip files from devices Google Nexus and Xiaomi M
 
 **Also note:** The model.pkl file is not available with the rest of the files due to its large size. However, if you download the script with code and dataset and set them up as outlined in this document, the script will train the model and create your own model.pkl locally, along with other output files in the output folder. The script automatically creates the "output" and "charts" folders if they don't already exist.
 
+**Note** I have managed to upload the the whole project to a Google Drive with the dataset used for this project under the 'data' folder. There is the link: https://drive.google.com/drive/folders/1mQd6-YC9lhvdlCPILjPQdQCWuWPrW8az?usp=sharing
 ### Key Capabilities
 
 **Privacy-Preserving Classification**  
