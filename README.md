@@ -66,7 +66,7 @@ The downloaded dataset contains zip files from devices Google Nexus and Xiaomi M
 
 ### Research Context  
 
-This implementation is part of research on **"Network Traffic Classification of 5G networks for Improvement of QoS"**. The system addresses the challenge of identifying application types in modern encrypted networks to enable QoS policies.
+This implementation is part of research on **"Network Traffic Classification of 5G networks for Improvement of QoS"**. The system addresses the challenge of identifying application types in modern encrypted networks to enable intelligent QoS policies.
 
 **Problem Addressed:**
 ⦁ Traditional port-based classification: 30-70% accuracy (obsolete)  
@@ -162,13 +162,13 @@ Each classified application receives detailed QoS recommendations:
 3. Ensure Python 3.8+ is included in the installation
 
 #### Step 2: Clone or Download the Repository
-'''bash
+```bash
 # Option A: Clone with Git
 git clone https://github.com/tomRiddle-the1st/network_traffic_classification.git
 
 # Option B: Download ZIP from GitHub
 # Extract to your desired location
-'''
+```
 
 #### Step 3: Open the Project in Visual Studio
 1. Launch **Visual Studio Community 2022**
@@ -201,10 +201,10 @@ git clone https://github.com/tomRiddle-the1st/network_traffic_classification.git
    - scipy
 
 **Option B: Using Terminal (Faster)**
-1. Open **View → Terminal** (or press 'Ctrl + ~')
+1. Open **View → Terminal** (or press `Ctrl + ~`)
 2. Ensure your virtual environment is activated (VS does this automatically)
-3.requirements:
-'''
+3. Create `requirements
+```requirements
 pandas>=1.3.0
 numpy>=1.21.0
 scikit-learn>=1.0.0
@@ -213,23 +213,24 @@ seaborn>=0.11.0
 imbalanced-learn>=0.8.0
 joblib>=1.1.0
 scipy>=1.7.0
-'''
+```
+
 
 #### Step 6: Verify Installation
 In the Visual Studio terminal, run:
-'''bash
+```bash
 python --version  # Should show Python 3.8+
 pip list  # Should show all installed packages
-'''
+```
 
 #### Step 7: Prepare Dataset
-1. Create a 'data/' folder in your project root
+1. Create a `data/` folder in your project root
 2. Download MIRAGE-2019 dataset from Kaggle
 3. Extract and merge all JSON files from both device folders into `data/`
 
 #### Step 8: Run the Script
 **Option A: Using Debug/Run**
-1. Open 'network_traffic_classification.py' in the editor
+1. Open `network_traffic_classification.py` in the editor
 2. Press **F5** (Start Debugging) or **Ctrl+F5** (Start Without Debugging)
 3. View output in the integrated terminal
 
@@ -247,7 +248,56 @@ python network_traffic_classification.py
 
 ---
 
-### Method 2: Manual Installation
+### Method 2: Using Command Line (Cross-Platform)
+
+#### Step 1: Clone the Repository
+```bash
+git clone https://github.com/tomRiddle-the1st/network_traffic_classification.git
+cd network_traffic_classification
+```
+
+#### Step 2: Create Virtual Environment
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+```
+
+#### Step 3: Check requirements
+```requirements
+pandas>=1.3.0
+numpy>=1.21.0
+scikit-learn>=1.0.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+imbalanced-learn>=0.8.0
+joblib>=1.1.0
+scipy>=1.7.0
+```
+
+#### Step 4: Install Dependencies
+```bash
+# Install all requirements
+pip install -r requirements #check above
+
+# Verify installation
+python -c "import pandas, numpy, sklearn, matplotlib, seaborn, imblearn; print('All dependencies installed successfully!')"
+```
+
+#### Step 5: Verify Installation
+```bash
+python --version  # Should show Python 3.8+
+pip list | grep scikit-learn  # Verify scikit-learn installation
+```
+
+---
+
+### Method 3: Manual Installation
 Install packages individually:
 ```bash
 pip install pandas>=1.3.0
@@ -272,20 +322,20 @@ The script automatically creates `output/` and `charts/` folders, but you need t
 project-root/
 ├── network_traffic_classification.py  # Main script
 ├── README.md                          # This file
-├── requirements.txt                   # Dependencies list
+├── requirements                      # Dependencies list
 └── data/                              # CREATE THIS MANUALLY
-    ├── 1494419517_com.twitter.android_MIRAGE-2019_traffic_dataset_labeled_biflows.json
-    ├── 1494434240_com.google.android.youtube_MIRAGE-2019_traffic_dataset_labeled_biflows.json
-    ├── 1494508157_com.spotify.music_MIRAGE-2019_traffic_dataset_labeled_biflows.json
+    ├── com.waze_*.json
+    ├── com.google.android.youtube_*.json
+    ├── com.spotify.music_*.json
     └── ... (other application JSON files from BOTH devices)
 
 # These folders are created automatically by the script:
-├── output/                            #  Auto-created via script or create the folder manually and the script will save the output files 
+├── output/                            #Auto-created via script or create the folder manually and the script will save the output files
 │   ├── Mirage_flows.csv
 │   ├── model.pkl
 │   ├── feature_scaler.pkl
 │   └── lda_transformer.pkl (if LDA enabled)
-└── charts/                            #  Auto-created via script or create the folder manually and the script will save the png files
+└── charts/                            # Auto-created via script or create the folder manually and the script will save the png files
     ├── traffic_distribution.png
     ├── priority_distribution.png    
     ├── latency_sensitivity.png
@@ -301,7 +351,7 @@ project-root/
 3. Extract the downloaded files - you'll see folders for **Google Nexus** and **Xiaomi Mi5**
 4. **IMPORTANT:** Create a `data/` folder in your project root
 5. **Merge all JSON files** from BOTH device folders into the single `data/` folder:
-   '''     
+   ```
    data/
    ├── 1494419517_com.twitter.android_MIRAGE-2019_traffic_dataset_labeled_biflows.json
    ├── 1494434240_com.google.android.youtube_MIRAGE-2019_traffic_dataset_labeled_biflows.json
@@ -310,13 +360,13 @@ project-root/
    ├── 1511197686_com.facebook.orca_MIRAGE-2019_traffic_dataset_labeled_biflows.json
    ├── 1494596297_air.com.hypah.io.slither_MIRAGE-2019_traffic_dataset_labeled_biflows.json
    └── ... (all other JSON files from both devices)
-   '''
+   ```
 6. The script will automatically process all JSON files in this folder regardless of device origin
 
 ### 3. Verify Dataset Format
 
 Ensure your JSON files follow the MIRAGE-2019 format:
-'''json
+```json
 {
   " "192.168.20.101,51221,216.58.205.42,443,6"": { #flow_id
     "packet_data": {
@@ -349,7 +399,7 @@ Ensure your JSON files follow the MIRAGE-2019 format:
        "90_percentile": 1420.0
      },....
 }
-'''
+```
 
 ### 4. Run the System
 
@@ -358,14 +408,25 @@ Ensure your JSON files follow the MIRAGE-2019 format:
 2. Press **F5** or click the ** Start** button
 3. View output in the integrated terminal
 
+**Using Command Line:**
+```bash
+# Activate your virtual environment first
+source venv/bin/activate  # On macOS/Linux
+# or
+venv\Scripts\activate  # On Windows
+
+# Run the classification system
+python network_traffic_classification.py
+```
+
 ### 5. Expected Output
 
 The system will execute the following pipeline:
 
-'''
+```
 NETWORK TRAFFIC CLASSIFICATION
 
-Step 1: Aggregating flow data... #processes 1640 files
+Step 1: Aggregating flow data... #processes 1640 json files
 Processing waze with 1234 flows
 Processing youtube with 5678 flows
 ...
@@ -478,7 +539,7 @@ Model and metadata saved to output/model.pkl
 Feature scaler saved to output/feature_scaler.pkl
 Execution completed successfully
 Total execution time: 3.0 minutes and 6.14 seconds
-'''
+```
 
 ---
 
@@ -508,7 +569,7 @@ The system automatically extracts labels from filenames. Supported patterns:
 ⦁ 1511195631_com.facebook.katana_MIRAGE-2019_traffic_dataset_labeled_biflows --> facebook  
 ⦁ 1511197686_com.facebook.orca_MIRAGE-2019_traffic_dataset_labeled_biflows --> messenger  
 ⦁ 1494596297_air.com.hypah.io.slither_MIRAGE-2019_traffic_dataset_labeled_biflows --> slither  
-⦁ And more...  
+⦁ And more... 
 
 ### Using Custom Datasets
 
@@ -516,7 +577,7 @@ To use your own dataset:
 
 **1. Format Requirements:**
 Your JSON files must contain flow-level features in this structure:
-'''json
+```json
 {
   " "192.168.20.101,51221,216.58.205.42,443,6"": { #flow_id
     "packet_data": {
@@ -549,21 +610,21 @@ Your JSON files must contain flow-level features in this structure:
        "90_percentile": 1420.0
      },....
 }
-'''
+```
 
-**2. Update Label Extraction to your dataset needs:**
+**2. Update Label Extraction according to your dataset:**
 Modify the `extract_label()` function in the script to match your filename convention:
-'''python
+```python
 def extract_label(filename):
     # Add your custom logic here
     if "myapp" in filename:
         return "myapp"
     # ... existing logic
-'''
+```
 
 **3. Add QoS Policies:**
-Define QoS requirements for your applications in the `qos_policies` dictionary:
-'''python
+Define QoS  for your applications in the `qos_policies` dictionary:
+```python
 qos_policies = {
     'myapp': {
         'priority': 'high',
@@ -572,7 +633,7 @@ qos_policies = {
         'jitter_tolerance': 'low'
     }
 }
-'''
+```
 
 ---
 
@@ -582,9 +643,8 @@ qos_policies = {
 
 Edit configuration variables at the top of `network_traffic_classification.py`:
 
-'''python
+```python
 # CONFIGURATION SETTINGS
-
 # File paths
 data_folder = "data"                     # Input data directory
 output_folder = "output"                 # Output directory
@@ -600,14 +660,14 @@ use_lda = False                          # Apply dimensionality reduction
 
 # Display Settings
 top_features = 10                        # Number of top features to display
-'''
+```
 
 ### Advanced Configuration
 
 #### Random Forest Hyperparameters
 
 Modify in the `train_model()` function:
-'''python
+```python
 rf_model = RandomForestClassifier(
     n_estimators=300,          # Number of trees in forest
     max_depth=25,             # Maximum depth of each tree
@@ -617,7 +677,7 @@ rf_model = RandomForestClassifier(
     random_state=42,          # Seed for reproducibility
     n_jobs=-1                 # Use all CPU cores
 )
-'''
+```
 
 **Tuning Guidelines:**
 - **Increase accuracy:** Increase `n_estimators` (200-500)  
@@ -628,50 +688,50 @@ rf_model = RandomForestClassifier(
 #### Train-Test Split
 
 Adjust in `train_model()` function:
-'''python
+```python
 X_train, X_test, y_train, y_test = train_test_split(
     X_final, y_resampled, 
     test_size=0.2,           # 20% for testing (adjust 0.1-0.3)
     stratify=y_resampled,    # Maintain class proportions
     random_state=42          # Reproducible split
 )
-'''
+```
 
 #### Oversampling Configuration
 
 **Random Oversampling (Current Default):**
-'''python
+```python
 ros = RandomOverSampler(random_state=42)
 X_resampled, y_resampled = ros.fit_resample(X_scaled, y)
-'''
+```
 
 **SMOTE (Alternative):**
-'''python
+```python
 smote = SMOTE(
     random_state=42,
     k_neighbors=5,           # Number of nearest neighbors
     sampling_strategy='auto' # Balance all classes
 )
 X_resampled, y_resampled = smote.fit_resample(X_scaled, y)
-'''
+```
 
 #### LDA Configuration
 
 When `use_lda = True`:
-'''python
+```python
 n_components = min(
     len(y.unique()) - 1,     # Maximum LDA components
     X_resampled.shape[1],    # Current feature count
     50                       # User-defined maximum
 )
 lda = LinearDiscriminantAnalysis(n_components=n_components)
-'''
+```
 
 ### QoS Policy Customization
 
 Define custom QoS policies for your applications in the script:
 
-'''python
+```python
 qos_policies = {
     'application_name': {
         'priority': 'high',              # Options: high, medium, low
@@ -680,14 +740,13 @@ qos_policies = {
         'jitter_tolerance': 'low'        # Options: very_low, low, medium, high
     }
 }
-'''
+```
 
 ---
 
 ## Usage Guide
 
 ### Command Line Execution
-
 #### Basic Usage
 ```bash
 python network_traffic_classification.py
@@ -723,7 +782,7 @@ top_features = 20
 ### Model Information Structure
 
 The saved `model.pkl` contains:
-'''python
+```python
 {
     'model': RandomForestClassifier,      # Trained model
     'scaler': StandardScaler,             # Feature scaler
@@ -737,13 +796,13 @@ The saved `model.pkl` contains:
         'top_features': int
     }
 }
-'''
+```
 
 ### Console Output
 
 The system prints detailed progress information:
 
-'''
+```
 Step 1: Aggregating flow data...
 ├─ Processing waze with 1234 flows
 ├─ Processing youtube with 5678 flows
@@ -768,7 +827,7 @@ Step 4: Evaluating model...
 
 Step 5: QoS analysis...
 └─ [Distribution charts displayed]
-'''
+```
 
 ### Visualizations
 
@@ -803,17 +862,17 @@ The system generates several plots automatically saved to the `charts/` folder:
 All output files are automatically saved to their respective folders:
 
 **output/ folder:**
-- Mirage_flows.csv - Aggregated and processed dataset
-- model.pkl - Trained Random Forest model with metadata
-- feature_scaler.pkl - StandardScaler for feature normalization
-- lda_transformer.pkl - LDA transformer (only if use_lda = True)
+- `Mirage_flows.csv` - Aggregated and processed dataset
+- `model.pkl` - Trained Random Forest model with metadata
+- `feature_scaler.pkl` - StandardScaler for feature normalization
+- `lda_transformer.pkl` - LDA transformer (only if `use_lda = True`)
 
 **charts/ folder:**
-- traffic_distribution.png - Application flow distribution bar chart
-- priority_distribution.png - QoS priority pie chart
-- latency_sensitivity.png - Latency sensitivity pie chart
-- bandwidth_requirements.png - Bandwidth requirements pie chart
-- confusion_matrix.png - Classification confusion matrix heatmap
+- `traffic_distribution.png` - Application flow distribution bar chart
+- `priority_distribution.png` - QoS priority pie chart
+- `latency_sensitivity.png` - Latency sensitivity pie chart
+- `bandwidth_requirements.png` - Bandwidth requirements pie chart
+- `confusion_matrix.png` - Classification confusion matrix heatmap
 
 ### File Descriptions
 
@@ -918,7 +977,7 @@ Linear Discriminant Analysis transformer:
 **Problem:** `MemoryError: Unable to allocate array`
 
 **Solutions:**
-'''python
+```python
 # Option 1: Reduce dataset size
 sample_size = 50000
 if len(data) > sample_size:
@@ -937,11 +996,11 @@ use_lda = False
 # Option 4: Use SMOTE instead of Random Oversampling (generates less data)
 use_SMOTE = True
 use_random_oversampling = False
-'''
+```
 
 #### 2. Import Errors
 
-**Problem:** ModuleNotFoundError: No module named 'sklearn'
+**Problem:** `ModuleNotFoundError: No module named 'sklearn'`
 
 **Solutions:**
 
@@ -954,7 +1013,7 @@ use_random_oversampling = False
 **In Command Line:**
 ```bash
 # Reinstall dependencies
-pip install -r # check requirements above
+pip install -r requirements #check requirements
 
 # Or install individually
 pip install scikit-learn
@@ -966,7 +1025,7 @@ python -c "import sklearn; print(sklearn.__version__)"
 
 #### 3. JSON Parsing Errors
 
-**Problem:** json.decoder.JSONDecodeError
+**Problem:** `json.decoder.JSONDecodeError`
 
 **Solution:** The script already handles invalid JSON files automatically:
 ```python
@@ -986,11 +1045,11 @@ If you still encounter errors:
 
 #### 4. File Not Found Errors
 
-**Problem:** FileNotFoundError: [Errno 2] No such file or directory: 'data'
+**Problem:** `FileNotFoundError: [Errno 2] No such file or directory: 'data'`
 
 **Solution:**
 ```bash
-# Create data directory #or name it what ever you want to
+# Create data directory
 mkdir data
 
 # Verify JSON files exist
@@ -1016,7 +1075,7 @@ cd   # Windows
 **Problem:** Accuracy below 80%
 
 **Possible Causes and Solutions:**
-'''python
+```python
 # 1. Insufficient data - Check dataset size
 print(f"Total flows: {len(data)}")
 # Need at least 500+ flows per application for good results
@@ -1036,14 +1095,14 @@ rf_model = RandomForestClassifier(
 )
 
 # 5. Using wrong dataset - Verify JSON format matches MIRAGE-2019
-'''
+```
 
 #### 6. Slow Performance
 
 **Problem:** Training takes too long (>10 minutes)
 
 **Optimizations:**
-'''python
+```python
 # 1. Reduce number of trees
 n_estimators=100  # Instead of 300
 
@@ -1059,7 +1118,7 @@ if len(data) > 100000:
 
 # 5. Enable LDA for dimensionality reduction
 use_lda = True  # Reduces features, speeds up training
-'''
+```
 
 **Additional Tips:**
 - Close other applications to free system resources
@@ -1073,17 +1132,17 @@ use_lda = True  # Reduces features, speeds up training
 **Solutions:**
 
 **In Visual Studio 2022:**
-'''python
+```python
 # Add at beginning of script
 import matplotlib
 matplotlib.use('TkAgg')  # Try different backends: 'Qt5Agg', 'Agg'
 
 # Force plot display
 plt.show(block=True)
-'''
+```
 
 **In Command Line:**
-'''python
+```python
 # For headless servers (no display)
 import matplotlib
 matplotlib.use('Agg')  # Saves plots without displaying
@@ -1092,12 +1151,14 @@ matplotlib.use('Agg')  # Saves plots without displaying
 import os
 if not os.path.exists('charts'):
     os.makedirs('charts')
-'''
+```
 
 **Common Issues:**
 - Charts not appearing: Install `python-tk` package
 - Charts not saving: Check folder permissions
 - Charts blank: Update matplotlib to latest version
+
+
 
 #### 8. Visual Studio Specific Issues
 
@@ -1195,7 +1256,7 @@ network_traffic_classification/
 │
 ├── network_traffic_classification.py  # Main script (all-in-one)
 ├── README.md                          # This file
-├── requirements.txt                   # Python dependencies
+├── requirements                  # Python dependencies
 ├── USER_MANUAL.md                     # Detailed user guide (if available)
 ├── RESEARCH_PAPER.md                  # Full research article (if available)
 │
@@ -1250,19 +1311,15 @@ network_traffic_classification/
 
 If you use this software in your research, please cite:
 
-'''bibtex{
-  title={Network Traffic Classification of 5G networks for Improvement of QoS},
+```bibtex
+@{title={Network Traffic Classification of 5G networks for Improvement of QoS},
   author={Ismail, Mohammed Aqeel},
   year={2025},
   school={University of KwaZulu-Natal},
   address={Pietermaritzburg, South Africa},
   note={Software available at: https://github.com/tomRiddle-the1st/network_traffic_classification}
 }
-
-**Related Publications:**
-⦁ MIRAGE-2019 Dataset: Aceto et al., "MIRAGE: Mobile-app Traffic Capture and Ground-truth Creation", IEEE ICCCS 2019
-⦁ Random Forest Classification: Breiman, L., "Random Forests", Machine Learning, 2001
-
+```
 ---
 
 ## License
