@@ -368,7 +368,7 @@ project-root/
 Ensure your JSON files follow the MIRAGE-2019 format:
 ```json
 {
-  " "192.168.20.101,51221,216.58.205.42,443,6"": { #flow_id
+  "192.168.20.101,51221,216.58.205.42,443,6": { #flow_id
     "packet_data": {
   "src_port": [ 51221, 443, 51221, ... ],
   "dst_port": [ 443, 51221,...],
